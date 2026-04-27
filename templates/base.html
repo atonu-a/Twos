@@ -1,0 +1,95 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="{% static 'styles/output.css' %}" />
+    <title>Twos</title>
+  </head>
+  <body class="bg-[#d9d9d9]">
+    <header class="h-25 bg-[#f8f8f8] flex items-center justify-center shadow-[0px_4px_12px_0px(0,0,0,0.7)]">
+      <div class="flex flex justify-between responsive">
+        <h1 class="text-[#ff6767] text-[32px] font-semibold">
+          T<span class="text-black">wos</span>.
+        </h1>
+        <div
+          class="max-w-[695px] w-100"
+        >
+          <input
+            type="search"
+            placeholder="Search yours tasks here......."
+            class="h-full rounded-lg px-4 border-[#ff6767]! bg-white text-[#A1A3AB] font-semibold"
+          />
+          <button class="p-2.5 text-white bg-[#ff6767] rounded-lg">
+            <i class="fa-solid fa-search"></i>
+          </button>
+        </div>
+
+        <div class="font-medium flex items-center gap-4">
+          <div>
+            <button class="p-2.5 text-white bg-[#ff6767] rounded-lg">
+              <i class="fa-solid fa-bell"></i>
+            </button>
+            <button class="p-2.5 text-white bg-[#ff6767] rounded-lg">
+              <i class="fa-solid fa-calendar-days"></i>
+            </button>
+          </div>
+          <div>
+            <p class="text-[15px]">Tuesday</p>
+            <p class="text-[14px] text-[#3ABEFF]">22/07/2026</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {% comment %} Left sidebar {% endcomment %}
+    <section
+      class="dashboard text-white flex flex-col items-center gap-7 max-w-91.25 h-screen border border-white bg-[#ff6767] rounded-lg p-5 shadow-[0px_4px_8px_0px(0,0,0,0.25)]"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="{%static 'image/image.png' %}"
+          alt="error"
+          class="border rounded-[50%] w-21.5 h-21.5 object-cover"
+        />
+        <h1 class="font-semibold">Sundar Gurung</h1>
+        <p>example123@gmail.com</p>
+      </div>
+      <nav
+        class="w-[90%] h-full text-white flex flex-col justify-between items-start"
+      >
+        <div class="flex flex-col gap-1 items-start w-full">
+          <button class="active">
+            <i class="fa-solid fa-chart-column"></i> Dashboard
+          </button>
+          <button class="">
+            <i class="fa-solid fa-exclamation"></i> Important
+          </button>
+          <button class="">
+            <i class="fa-solid fa-clipboard-check"></i> My Tasks
+          </button>
+          <button class=""><i class="fa-solid fa-gear"></i> Settings</button>
+          <button class="">
+            <i class="fa-solid fa-circle-question"></i> Help
+          </button>
+        </div>
+        <div>
+          <button>
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+          </button>
+        </div>
+      </nav>
+    </section>
+
+    <script scr="{% static 'js/app.js' %}"></script>
+  </body>
+</html>

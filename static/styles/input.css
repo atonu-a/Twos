@@ -1,0 +1,27 @@
+/* npx @tailwindcss/cli -i static/styles/input.css -o static/styles/output.css --watch */
+@import "tailwindcss";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+@theme {
+    /* Default sans font কে Inter দিয়ে রিপ্লেস করা */
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+body {
+    font-family: var(--font-sans);
+}
+
+.responsive{
+    @apply container mx-auto;
+}
+
+
+
+nav button{
+    @apply py-4.25 pl-4.25 w-full text-left rounded-[14px];
+}
+
+.active {
+    @apply bg-white text-[#ff6767];
+}
