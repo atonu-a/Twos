@@ -15,81 +15,149 @@
     <link rel="stylesheet" href="{% static 'styles/output.css' %}" />
     <title>Twos</title>
   </head>
-  <body class="bg-[#d9d9d9]">
-    <header class="h-25 bg-[#f8f8f8] flex items-center justify-center shadow-[0px_4px_12px_0px(0,0,0,0.7)]">
-      <div class="flex flex justify-between responsive">
-        <h1 class="text-[#ff6767] text-[32px] font-semibold">
-          T<span class="text-black">wos</span>.
-        </h1>
-        <div
-          class="max-w-[695px] w-100"
-        >
-          <input
-            type="search"
-            placeholder="Search yours tasks here......."
-            class="h-full rounded-lg px-4 border-[#ff6767]! bg-white text-[#A1A3AB] font-semibold"
-          />
-          <button class="p-2.5 text-white bg-[#ff6767] rounded-lg">
-            <i class="fa-solid fa-search"></i>
-          </button>
-        </div>
+  <body class="bg-[#d9d9d9] flex flex-col h-screen">
+    <!-- ===== HEADER SECTION ===== -->
 
-        <div class="font-medium flex items-center gap-4">
-          <div>
-            <button class="p-2.5 text-white bg-[#ff6767] rounded-lg">
-              <i class="fa-solid fa-bell"></i>
-            </button>
-            <button class="p-2.5 text-white bg-[#ff6767] rounded-lg">
-              <i class="fa-solid fa-calendar-days"></i>
+    <header class="bg-[#f8f8f8] shadow-lg">
+      <div class="px-4 md:px-6 py-4 md:py-5">
+        <div
+          class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+        >
+          <!-- ===== LOGO ===== -->
+
+          <h1
+            class="text-[28px] md:text-[32px] text-[#ff6767] font-semibold whitespace-nowrap"
+          >
+            T<span class="text-black">wos</span>.
+          </h1>
+
+          <!-- ===== SEARCH BAR ===== -->
+
+          <div class="flex flex-1 max-w-150 gap-2">
+            <input
+              type="search"
+              placeholder="Search tasks..."
+              class="flex-1 rounded-lg px-4 py-2 border-2 border-[#ff6767] bg-white text-[#A1A3AB] font-medium placeholder-[#A1A3AB] focus:outline-none focus:border-[#ff5555] transition"
+            />
+
+            <button
+              class="p-2.5 text-white bg-[#ff6767] rounded-lg hover:bg-[#ff5555] transition"
+            >
+              <i class="fa-solid fa-search"></i>
             </button>
           </div>
-          <div>
-            <p class="text-[15px]">Tuesday</p>
-            <p class="text-[14px] text-[#3ABEFF]">22/07/2026</p>
+
+          <!-- ===== RIGHT SECTION (BUTTONS + DATE) ===== -->
+          <div class="flex items-center gap-3 md:gap-4">
+            <!-- ===== ACTION BUTTONS ===== -->
+
+            <div class="flex gap-2">
+              <button
+                class="p-2.5 text-white bg-[#ff6767] rounded-lg hover:bg-[#ff5555] transition"
+                title="Notifications"
+              >
+                <i class="fa-solid fa-bell text-sm md:text-base"></i>
+              </button>
+
+              <button
+                class="p-2.5 text-white bg-[#ff6767] rounded-lg hover:bg-[#ff5555] transition"
+                title="Calendar"
+              >
+                <i class="fa-solid fa-calendar-days text-sm md:text-base"></i>
+              </button>
+            </div>
+
+            <!-- ===== DATE INFO ===== -->
+
+            <div class="hidden sm:block text-sm md:text-base">
+              <p class="font-medium text-gray-800">Tuesday</p>
+              <p class="text-[#3ABEFF] font-semibold">22/07/2026</p>
+            </div>
           </div>
         </div>
       </div>
     </header>
 
-    {% comment %} Left sidebar {% endcomment %}
-    <section
-      class="dashboard text-white flex flex-col items-center gap-7 max-w-91.25 h-screen border border-white bg-[#ff6767] rounded-lg p-5 shadow-[0px_4px_8px_0px(0,0,0,0.25)]"
-    >
-      <div class="flex flex-col items-center">
-        <img
-          src="{%static 'image/image.png' %}"
-          alt="error"
-          class="border rounded-[50%] w-21.5 h-21.5 object-cover"
-        />
-        <h1 class="font-semibold">Sundar Gurung</h1>
-        <p>example123@gmail.com</p>
-      </div>
-      <nav
-        class="w-[90%] h-full text-white flex flex-col justify-between items-start"
-      >
-        <div class="flex flex-col gap-1 items-start w-full">
-          <button class="active">
-            <i class="fa-solid fa-chart-column"></i> Dashboard
-          </button>
-          <button class="">
-            <i class="fa-solid fa-exclamation"></i> Important
-          </button>
-          <button class="">
-            <i class="fa-solid fa-clipboard-check"></i> My Tasks
-          </button>
-          <button class=""><i class="fa-solid fa-gear"></i> Settings</button>
-          <button class="">
-            <i class="fa-solid fa-circle-question"></i> Help
-          </button>
-        </div>
-        <div>
-          <button>
-            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-          </button>
-        </div>
-      </nav>
-    </section>
+    <!-- ===== MAIN CONTENT AREA ===== -->
 
-    <script scr="{% static 'js/app.js' %}"></script>
+    <!-- ===== LEFT SIDEBAR ===== -->
+
+    <aside
+      class="sidebar bg-[#ff6767] text-white w-full md:w-64 lg:w-72 h-screen overflow-y-auto md:overflow-y-auto rounded-[8px]"
+    >
+      <div class="p-4 md:p-5">
+        <!-- ===== PROFILE SECTION ===== -->
+
+        <div
+          class="flex md:flex-col items-center gap-4 md:gap-3 mb-6 md:mb-8 pb-4 md:pb-6 border-b border-white/20"
+        >
+          <img
+            src="{% static 'image/image.png' %}"
+            alt="Profile"
+            class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-white"
+          />
+
+          <div class="md:text-center">
+            <h2 class="font-semibold text-sm md:text-base">Sundar Gurung</h2>
+            <p class="text-xs md:text-sm text-white/80">example123@gmail.com</p>
+          </div>
+        </div>
+
+        <!-- ===== NAVIGATION MENU ===== -->
+        <nav class="flex flex-col gap-2">
+          <!-- ===== TOP NAVIGATION ITEMS ===== -->
+
+          <div class="space-y-2 mb-6 pb-6 border-b border-white/20">
+            <button
+              class="w-full flex items-center gap-3 px-4 py-3 rounded-lg active font-medium text-sm md:text-base hover:bg-white/30 transition"
+            >
+              <i class="fa-solid fa-chart-column w-5"></i>
+              <span>Dashboard</span>
+            </button>
+
+            <button
+              class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition"
+            >
+              <i class="fa-solid fa-exclamation w-5"></i>
+              <span>Important</span>
+            </button>
+
+            <button
+              class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition"
+            >
+              <i class="fa-solid fa-clipboard-check w-5"></i>
+              <span>My Tasks</span>
+            </button>
+
+            <button
+              class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition"
+            >
+              <i class="fa-solid fa-gear w-5"></i>
+              <span>Settings</span>
+            </button>
+
+            <button
+              class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition"
+            >
+              <i class="fa-solid fa-circle-question w-5"></i>
+              <span>Help</span>
+            </button>
+          </div>
+
+          <!-- ===== LOGOUT BUTTON ===== -->
+
+          <button
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition mt-auto"
+          >
+            <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
+            <span>Logout</span>
+          </button>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- ===== SCRIPT ===== -->
+
+    <script src="{% static 'js/app.js' %}"></script>
   </body>
 </html>
