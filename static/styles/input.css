@@ -22,6 +22,13 @@ nav button{
     @apply py-4.25 pl-4.25 w-full text-left rounded-[14px];
 }
 
-.active {
+nav .active {
     @apply bg-white text-[#ff6767];
+}
+
+.sidebar{
+    @apply duration-300 translate-x-[-100%] sm:translate-x-0 ;
+}
+.sidebar.active{
+    @apply  translate-x-0;
 }
