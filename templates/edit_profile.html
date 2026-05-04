@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Mission Logs | Edit Profile{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto mt-8">
+    <!-- Header Section -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h2 class="text-3xl font-bold text-slate-100">Edit Profile</h2>
+            <p class="text-slate-400">Update your commander credentials and status</p>
+        </div>
+        <a href="{% url 'profile' %}"
+            class="text-slate-400 hover:text-indigo-400 transition flex items-center gap-2 text-sm">
+            <i class="fa-solid fa-arrow-left"></i> Back to Profile
+        </a>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Profile Picture Upload -->
+        <div class="cosmic-panel rounded-2xl p-6 border border-slate-800">
+            <div class="flex items-center gap-6">
+                <div class="relative group">
+                    <img id="avatarPreview"
+                        src="https://ui-avatars.com/api/?name=Atonu&size=128&background=6366f1&color=fff"
+                        class="w-24 h-24 rounded-2xl border-2 border-indigo-500/50 object-cover">
+                    <div
+                        class="absolute inset-0 bg-slate-950/60 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer">
+                        <i class="fa-solid fa-camera text-white"></i>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-200 mb-1">Commander Avatar</label>
+                    <p class="text-xs text-slate-500 mb-3">JPG, PNG or GIF. Max size 2MB.</p>
+                    <input type="file" name="profile_pic" class="block w-full text-xs text-slate-400
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-lg file:border-0
+                        file:text-xs file:font-semibold
+                        file:bg-indigo-600 file:text-white
+                        hover:file:bg-indigo-700 transition">
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Info Section -->
+        <div class="cosmic-panel rounded-2xl p-6 space-y-5 border border-slate-800">
+            <h3 class="text-lg font-semibold text-indigo-300 border-b border-slate-800 pb-3 mb-4">Personal Information
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">First
+                        Name</label>
+                    <input type="text" name="first_name" value="Atonu"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Last
+                        Name</label>
+                    <input type="text" name="last_name" value="Roy Chowdhury"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 transition">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Bio / Mission
+                    Statement</label>
+                <textarea name="bio" rows="3"
+                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 transition resize-none">Exploring the backend galaxy with Django. Architect of Orbit Tasks.</textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Location</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </span>
+                    <input type="text" name="location" value="Jessore, Bangladesh"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-slate-200 focus:outline-none focus:border-indigo-500 transition">
+                </div>
+            </div>
+        </div>
+
+        <!-- Social/Dev Links -->
+        <div class="cosmic-panel rounded-2xl p-6 space-y-5 border border-slate-800">
+            <h3 class="text-lg font-semibold text-purple-300 border-b border-slate-800 pb-3 mb-4">External Links</h3>
+
+            <div class="flex items-center gap-3">
+                <span
+                    class="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center border border-slate-700">
+                    <i class="fa-brands fa-github text-slate-300"></i>
+                </span>
+                <input type="url" placeholder="GitHub Profile URL"
+                    class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500 transition">
+            </div>
+
+            <div class="flex items-center gap-3">
+                <span
+                    class="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center border border-slate-700">
+                    <i class="fa-solid fa-globe text-slate-300"></i>
+                </span>
+                <input type="url" placeholder="Portfolio Website"
+                    class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500 transition">
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <button type="submit"
+                class="flex-grow bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-indigo-500/20">
+                Save Changes
+            </button>
+            <button type="button"
+                class="px-8 py-3 bg-slate-800 text-slate-300 rounded-xl font-medium hover:bg-slate-700 transition">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

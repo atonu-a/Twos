@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Commander Profile | Orbit Tasks{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- Profile Header Card -->
+    <div class="cosmic-panel rounded-3xl overflow-hidden mb-8">
+        <div class="h-32 bg-gradient-to-r from-indigo-900 via-purple-900 to-slate-900"></div>
+        <div class="px-8 pb-8">
+            <div class="relative flex justify-between items-end -mt-12 mb-6">
+                <div class="relative">
+                    <img src="https://ui-avatars.com/api/?name=Atonu&size=128&background=6366f1&color=fff"
+                        class="w-32 h-32 rounded-3xl border-4 border-slate-950 shadow-2xl">
+                    <span
+                        class="absolute bottom-2 right-2 w-5 h-5 bg-teal-500 border-4 border-slate-950 rounded-full"></span>
+                </div>
+                <button
+                    class="bg-slate-800 hover:bg-slate-700 text-white px-5 py-2 rounded-xl text-sm font-medium transition border border-slate-700">
+                    Edit Profile
+                </button>
+            </div>
+
+            <div>
+                <h2 class="text-3xl font-bold text-slate-100">Atonu Roy Chowdhury</h2>
+                <p class="text-indigo-400">@atonu_dev • Senior Commander</p>
+                <p class="text-slate-400 mt-4 max-w-lg leading-relaxed">
+                    Exploring the backend galaxy with Django. Architect of Orbit Tasks and enthusiast of modern web UI.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats and Details Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Left Stats -->
+        <div class="md:col-span-1 space-y-6">
+            <div class="cosmic-panel rounded-2xl p-6">
+                <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Mission Stats</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-300">Total Orbits</span>
+                        <span class="font-bold text-indigo-400">142</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-300">Success Rate</span>
+                        <span class="font-bold text-teal-400">94%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-300">Rank</span>
+                        <span class="font-bold text-purple-400">Elite</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Settings/Info -->
+        <div class="md:col-span-2 space-y-6">
+            <div class="cosmic-panel rounded-2xl p-6">
+                <h3 class="text-lg font-semibold mb-4">Account Information</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-slate-500 text-xs uppercase">Email Address</p>
+                        <p class="text-slate-200 font-medium">atonu@polytechnic.edu</p>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-xs uppercase">Location</p>
+                        <p class="text-slate-200 font-medium">Jessore, Bangladesh</p>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-xs uppercase">Joined Station</p>
+                        <p class="text-slate-200 font-medium">October 2025</p>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-xs uppercase">Account Status</p>
+                        <span
+                            class="inline-block px-2 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold rounded border border-emerald-500/20 mt-1">VERIFIED
+                            COMMANDER</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Log Placeholder -->
+            <div class="cosmic-panel rounded-2xl p-6">
+                <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 text-sm">
+                        <div class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]"></div>
+                        <p class="text-slate-300">Completed mission <span class="text-white italic">"Setup Django
+                                Backend"</span></p>
+                        <span class="text-slate-500 ml-auto">2h ago</span>
+                    </div>
+                    <div class="flex items-center gap-4 text-sm">
+                        <div class="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]"></div>
+                        <p class="text-slate-300">Joined the <span class="text-white font-medium">CSS Tailwind v4</span>
+                            fleet</p>
+                        <span class="text-slate-500 ml-auto">5h ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

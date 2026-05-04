@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Orbit Tasks{% endblock %}
+
+{% block content %}
+<!-- Main Grid Container: Mobile এ ১ কলাম, Desktop এ ১২ কলামের গ্রিড -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- Left Sidebar: Missions Overview (Mobile এ উপরে থাকবে, Desktop এ পাশে) -->
+    <div class="lg:col-span-4 space-y-6">
+        <div class="cosmic-panel rounded-2xl p-6 shadow-xl shadow-indigo-500/5">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-3">
+                <span class="text-indigo-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 2a10 10 0 110 20 10 10 0 010-20zM12 6v6l4 2"></path>
+                    </svg>
+                </span>
+                Missions Overview
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
+                <!-- Active Missions -->
+                <div class="flex items-center justify-between p-4 bg-slate-900 rounded-xl border border-slate-700/60">
+                    <div>
+                        <p class="text-slate-400 text-xs uppercase tracking-wider">Active</p>
+                        <p class="text-2xl font-bold">16</p>
+                    </div>
+                    <span
+                        class="w-10 h-10 text-emerald-400 bg-emerald-500/10 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-rocket"></i>
+                    </span>
+                </div>
+
+                <!-- Priority Nebula -->
+                <div class="flex items-center justify-between p-4 bg-slate-900 rounded-xl border border-slate-700/60">
+                    <div>
+                        <p class="text-slate-400 text-xs uppercase tracking-wider">Priority</p>
+                        <p class="text-2xl font-bold text-red-400">04</p>
+                    </div>
+                    <span class="w-10 h-10 text-red-400 bg-red-500/10 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </span>
+                </div>
+
+                <!-- Stargazing -->
+                <div
+                    class="flex items-center justify-between p-4 bg-slate-900 rounded-xl border border-slate-700/60 opacity-60">
+                    <div>
+                        <p class="text-slate-400 text-xs uppercase tracking-wider">Future</p>
+                        <p class="text-2xl font-bold text-blue-400">23</p>
+                    </div>
+                    <span class="w-10 h-10 text-blue-400 bg-blue-500/10 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-star"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Panel: Mission Board -->
+    <div class="lg:col-span-8">
+        <div class="cosmic-panel rounded-2xl p-4 sm:p-6 shadow-xl shadow-indigo-500/5 h-full">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-3">
+                <span class="text-indigo-300">
+                    <i class="fa-solid fa-list-check"></i>
+                </span>
+                Current Missions
+            </h2>
+
+            <!-- Input Area: Mobile এ Stacked, Tablet থেকে Row -->
+            <div class="flex flex-col sm:flex-row gap-3 mb-8">
+                <input type="text" id="taskInput" placeholder="Enter new mission code..."
+                    class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                <button onclick="addTask()"
+                    class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.02] active:scale-95 text-white px-8 py-3 rounded-xl font-medium transition-all shadow-lg shadow-indigo-500/20 cursor-pointer whitespace-nowrap">
+                    Add Mission
+                </button>
+            </div>
+
+            <!-- Redesigned Task List with horizontal scroll for small screens -->
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left min-w-[550px]">
+                    <thead class="border-b border-slate-800 text-slate-500 text-xs uppercase tracking-widest">
+                        <tr>
+                            <th class="py-3 px-2">Status</th>
+                            <th class="py-3 px-2">Mission Name</th>
+                            <th class="py-3 px-2">Priority</th>
+                            <th class="py-3 px-2">Crew</th>
+                            <th class="py-3 px-2 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="taskList" class="divide-y divide-slate-800/60">
+                        <!-- JS injected rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // আপনার আগের সব স্ক্রিপ্ট একই থাকবে
+    let tasks = JSON.parse(localStorage.getItem('orbitTasks Cosmic')) || [];
+
+    function saveTasks() {
+        localStorage.setItem('orbitTasks Cosmic', JSON.stringify(tasks));
+    }
+
+    function getPriorityColor(priority) {
+        switch (priority) {
+            case 'High': return 'text-red-400 bg-red-500/10 border-red-500/20';
+            case 'Medium': return 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20';
+            case 'Low': return 'text-blue-400 bg-blue-500/10 border-blue-500/20';
+            default: return 'text-slate-400 bg-slate-500/10 border-slate-500/20';
+        }
+    }
+
+    function renderTasks() {
+        const list = document.getElementById('taskList');
+        list.innerHTML = '';
+
+        if (tasks.length === 0) {
+            list.innerHTML = '<tr><td colspan="5" class="text-center text-slate-600 py-12">No active missions. Awaiting new cosmic directives.</td></tr>';
+            return;
+        }
+
+        tasks.forEach((task, index) => {
+            const tr = document.createElement('tr');
+            tr.className = `group ${task.done ? 'opacity-40' : ''} transition hover:bg-slate-900/40`;
+
+            const priority = task.priority || 'Low';
+            const priorityClass = getPriorityColor(priority);
+
+            tr.innerHTML = `
+                <td class="py-4 px-2">
+                    <div class="flex items-center gap-4 cursor-pointer" onclick="toggleTask(${index})">
+                        <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center transition ${task.done ? 'border-teal-500 bg-teal-500' : 'border-slate-600 group-hover:border-indigo-400'}">
+                            ${task.done ? '<i class="fa-solid fa-check text-[10px] text-slate-950"></i>' : ''}
+                        </div>
+                    </div>
+                </td>
+                <td class="py-4 px-2">
+                    <span class="${task.done ? 'line-through text-slate-600' : 'text-slate-200'} font-medium transition select-none">${task.text}</span>
+                </td>
+                <td class="py-4 px-2">
+                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-md border uppercase ${priorityClass}">${priority}</span>
+                </td>
+                <td class="py-4 px-2">
+                    <div class="flex -space-x-2">
+                        <img src="https://ui-avatars.com/api/?name=User&background=random" class="w-7 h-7 rounded-full border border-slate-800">
+                        <div class="w-7 h-7 rounded-full border border-slate-800 bg-slate-800 flex items-center justify-center text-[10px] text-slate-400">+1</div>
+                    </div>
+                </td>
+                <td class="py-4 px-2 text-right">
+                    <button onclick="deleteTask(${index})" class="text-slate-600 hover:text-red-400 transition-colors p-2 cursor-pointer">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </td>
+            `;
+            list.appendChild(tr);
+        });
+    }
+
+    function addTask() {
+        const input = document.getElementById('taskInput');
+        const text = input.value.trim();
+        if (text) {
+            tasks.push({ text, done: false, priority: 'Low' });
+            input.value = '';
+            saveTasks();
+            renderTasks();
+        }
+    }
+
+    function toggleTask(index) {
+        tasks[index].done = !tasks[index].done;
+        saveTasks();
+        renderTasks();
+    }
+
+    function deleteTask(index) {
+        tasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+    }
+
+    document.getElementById('taskInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addTask();
+    });
+
+    renderTasks();
+</script>
+{% endblock %}

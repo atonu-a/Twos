@@ -1,256 +1,90 @@
-{% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% comment %}
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    {% endcomment %}
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="{% static 'styles/output.css' %}" />
-    <title>Twos</title>
-  </head>
-  <body class="bg-[#d9d9d9] flex flex-col h-screen">
-    <!-- ===== HEADER SECTION ===== -->
-
-    <header class="bg-[#f8f8f8] w-full shadow-lg fixed top-0 z-100">
-      <div class="px-4 md:px-6 py-4 md:py-5">
-        <div
-          class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-        >
-          <!-- ===== LOGO ===== -->
-
-          <h1
-            class="text-[28px] md:text-[32px] text-[#ff6767] font-semibold whitespace-nowrap"
-          >
-            T<span class="text-black">wos</span>.
-          </h1>
-
-          <!-- ===== SEARCH BAR ===== -->
-
-          <div class="flex flex-1 max-w-150 gap-2">
-            <input
-              type="search"
-              placeholder="Search tasks..."
-              class="flex-1 rounded-lg px-4 py-2 border-2 border-[#ff6767] bg-white text-[#A1A3AB] font-medium placeholder-[#A1A3AB] focus:outline-none focus:border-[#ff5555] transition"
-            />
-
-            <button
-              class="p-2.5 text-white bg-[#ff6767] rounded-lg hover:bg-[#ff5555] transition"
-            >
-              <i class="fa-solid fa-search"></i>
-            </button>
-          </div>
-
-          <!-- ===== RIGHT SECTION (BUTTONS + DATE) ===== -->
-          <div class="flex items-center gap-3 md:gap-4">
-            <!-- ===== ACTION BUTTONS ===== -->
-
-            <div class="flex gap-2">
-              <button
-                class="p-2.5 text-white bg-[#ff6767] rounded-lg hover:bg-[#ff5555] transition"
-                title="Notifications"
-              >
-                <i class="fa-solid fa-bell text-sm md:text-base"></i>
-              </button>
-
-              <button
-                class="p-2.5 text-white bg-[#ff6767] rounded-lg hover:bg-[#ff5555] transition"
-                title="Calendar"
-              >
-                <i class="fa-solid fa-calendar-days text-sm md:text-base"></i>
-              </button>
-
-              <button
-                class="menu p-2.5 text-white bg-[#ff6767] rounded-lg hover:bg-[#ff5555] transition block md:hidden"
-                title="Menu"
-              >
-                <i class="fa-solid fa-bars text-sm md:text-base"></i>
-              </button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbit Tasks - {% block title %}Cosmic Command Centre{% endblock %}</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #020617;
+            background-image: 
+                radial-gradient(at 10% 20%, #0c1a2c 0px, transparent 50%),
+                radial-gradient(at 80% 90%, #03081a 0px, transparent 50%);
+        }
+        .cosmic-panel {
+            background: rgba(12, 18, 38, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(130, 160, 255, 0.1);
+        }
+        /* Mobile scrollbar for tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+    
+    <!-- Cosmic Navbar -->
+    <nav class="cosmic-panel border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 flex items-center justify-center text-indigo-400 bg-indigo-500/10 rounded-full border border-indigo-500/20">
+                    <i class="fa-solid fa-user-astronaut text-sm"></i>
+                </div>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent">Twos</h1>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="{% url 'index' %}" class="text-slate-400 hover:text-indigo-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group"></i> Dashboard
+                </a>
+                <div class="flex items-center gap-5 border-l border-slate-800 pl-8">
+                    <button class="text-slate-400 hover:text-white relative"><i class="fa-solid fa-calendar-days"></i></button>
+                    <button class="text-slate-400 hover:text-white relative">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="absolute -top-2 -right-2 w-4 h-4 bg-red-500 text-[10px] rounded-full flex items-center justify-center text-white">3</span>
+                    </button>
+                    <a href="{% url 'about' %}" class="text-slate-400 hover:text-white"><i class="fa-solid fa-circle-info"></i></a>
+                    <a href="{% url 'profile' %}"><img src="https://ui-avatars.com/api/?name=Atonu&background=6366f1&color=fff" class="w-8 h-8 rounded-full border border-slate-700"></a>
+                </div>
             </div>
 
-            <!-- ===== DATE INFO ===== -->
-
-            <div class="text-sm md:text-base">
-              <p class="font-medium text-gray-800">Tuesday</p>
-              <p class="text-[#3ABEFF] font-semibold">22/07/2026</p>
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center gap-4">
+                 <button class="text-slate-400 relative p-2"><i class="fa-solid fa-bell"></i></button>
+                 <button id="menuBtn" class="text-slate-200 p-2"><i class="fa-solid fa-bars-staggered text-xl"></i></button>
             </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- ===== MAIN CONTENT AREA ===== -->
-    <main class="flex md:flex-row flex-col gap-4 absolute top-50 md:top-22.5">
-      <!-- ===== LEFT SIDEBAR ===== -->
-
-      <aside class="sidebar w-full md:w-64 bg-[#ff6767] text-white rounded-lg overflow-y-auto shrink-0 h-screen fixed">
-        <div class="p-4 md:p-5">
-          <!-- ===== PROFILE SECTION ===== -->
-
-          <div
-            class="flex md:flex-col items-center gap-4 md:gap-3 mb-6 md:mb-8 pb-4 md:pb-6 border-b border-white/20"
-          >
-            <img
-              src="{% static 'image/image.png' %}"
-              alt="Profile"
-              class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-white"
-            />
-
-            <div class="md:text-center">
-              <h2 class="font-semibold text-sm md:text-base">Sundar Gurung</h2>
-              <p class="text-xs md:text-sm text-white/80">
-                example123@gmail.com
-              </p>
-            </div>
-          </div>
-
-          <!-- ===== NAVIGATION MENU ===== -->
-          <nav class="flex flex-col gap-2">
-            <!-- ===== TOP NAVIGATION ITEMS ===== -->
-
-            <div class="space-y-2 mb-6 pb-6 border-b border-white/20">
-              <button
-                class="w-full flex items-center gap-3 px-4 py-3 rounded-lg active font-medium text-sm md:text-base hover:bg-white/30 transition"
-              >
-                <i class="fa-solid fa-chart-column w-5"></i>
-                <span>Dashboard</span>
-              </button>
-
-              <button
-                class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition"
-              >
-                <i class="fa-solid fa-exclamation w-5"></i>
-                <span>Important</span>
-              </button>
-
-              <button
-                class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition"
-              >
-                <i class="fa-solid fa-clipboard-check w-5"></i>
-                <span>My Tasks</span>
-              </button>
-
-              <button
-                class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition"
-              >
-                <i class="fa-solid fa-gear w-5"></i>
-                <span>Settings</span>
-              </button>
-
-              <button
-                class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition"
-              >
-                <i class="fa-solid fa-circle-question w-5"></i>
-                <span>Help</span>
-              </button>
-            </div>
-
-            <!-- ===== LOGOUT BUTTON ===== -->
-
-            <button
-              class="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-sm md:text-base hover:bg-white/20 transition mt-auto"
-            >
-              <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
-              <span>Logout</span>
-            </button>
-          </nav>
-        </div>
-      </aside>
-
-      <!-- ===== TASKS MANAGEMENT AREA ===== -->
-      <section
-        class=" bg-white m-4 md:m-6 p-6 md:p-8 rounded-xl shadow-md min-h-[150vh] "
-      >
-        <div class="border-b-2 border-[#ff6767]/20 pb-4 mb-8">
-          <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
-            Project Long Overview
-          </h2>
-          <p class="text-gray-500 mt-2">
-            Scroll down to see all the details and tasks.
-          </p>
         </div>
 
-        <div class="space-y-8">
-          <div
-            class="p-6 bg-[#f8f8f8] border-l-4 border-[#ff6767] rounded-r-lg"
-          >
-            <h3 class="text-xl font-semibold mb-3">01. Research & Planning</h3>
-            <p class="text-gray-600 leading-relaxed">
-              Ekhane apnar prothom dhaper details thakbe. Tailwind-er utility
-              class gulo check korun. Amra ekhane onek gulo paragraph add korchi
-              jate vertical space beshi lage. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua.
-            </p>
-          </div>
-
-          <div
-            class="p-6 bg-[#f8f8f8] border-l-4 border-[#3ABEFF] rounded-r-lg"
-          >
-            <h3 class="text-xl font-semibold mb-3">02. Design Architecture</h3>
-            <p class="text-gray-600 leading-relaxed">
-              Design korar somoy responsive breakpoints (sm, md, lg) kheyal
-              rakha joruri. Ager motoi ekhaneu amra boro ekta text block dicchi.
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-          </div>
-
-          <div
-            class="p-6 bg-[#f8f8f8] border-l-4 border-green-500 rounded-r-lg"
-          >
-            <h3 class="text-xl font-semibold mb-3">03. Backend Integration</h3>
-            <p class="text-gray-600 leading-relaxed">
-              Django ar PostgreSQL er kaj ekhane hobe. Database schemas ebong
-              models create korar somoy accuracy thaka dorkar. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur.
-            </p>
-          </div>
-
-          <div
-            class="h-64 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-xl my-10"
-          >
-            <p class="text-gray-400 font-medium">
-              Extra Space for Scrolling...
-            </p>
-          </div>
-
-          <div
-            class="p-6 bg-[#f8f8f8] border-l-4 border-yellow-500 rounded-r-lg"
-          >
-            <h3 class="text-xl font-semibold mb-3">04. Deployment & Testing</h3>
-            <p class="text-gray-600 leading-relaxed">
-              Render ba Cloudinary use kore media file manage kora jay. Testing
-              phase-e sob gulo button ar smooth animation check kora lagbe.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum.
-            </p>
-          </div>
+        <!-- Mobile Drawer (Hidden by default) -->
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-950 border-b border-slate-800 p-5 space-y-4">
+            <a href="{% url 'index' %}" class="block text-slate-300 hover:text-indigo-400 py-2"><i class="fa-solid fa-layer-group mr-3"></i> Dashboard</a>
+            <a href="#" class="block text-slate-300 py-2"><i class="fa-solid fa-calendar-days mr-3"></i> Calendar</a>
+            <a href="{% url 'about' %}" class="block text-slate-300 py-2"><i class="fa-solid fa-circle-info mr-3"></i> About</a>
         </div>
+    </nav>
 
-        <div class="mt-12 p-10 bg-[#ff6767] text-white rounded-xl text-center">
-          <h4 class="text-2xl font-bold">End of Section</h4>
-          <p class="mt-2">You have scrolled to the bottom!</p>
-          <button
-            class="mt-6 px-8 py-3 bg-white text-[#ff6767] font-bold rounded-lg hover:bg-gray-100 transition"
-          >
-            Back to Top
-          </button>
-        </div>
-      </section>
+    <!-- Main Content -->
+    <main class=" w-full max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        {% block content %}{% endblock %}
     </main>
 
-    <!-- ===== SCRIPT ===== -->
-
-    <script src="{% static 'js/app.js' %}"></script>
-  </body>
+    <script>
+        // Simple Mobile Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
 </html>
