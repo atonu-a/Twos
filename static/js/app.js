@@ -1,6 +1,6 @@
-let menu = document.querySelector(".menu");
-let sidebar = document.querySelector(".sidebar");
-
-menu.addEventListener("click", ()=>{
-    sidebar.classList.toggle("active");
-})
+// Simple Mobile Toggle
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+menuBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+});
