@@ -22,3 +22,9 @@ body {
   background: rgba(99, 102, 241, 0.3);
   border-radius: 10px;
 }
+.row-task{
+  @apply opacity-40;
+}
+.completed {
+  @apply bg-teal-500 border-teal-500 text-slate-950;
+}
