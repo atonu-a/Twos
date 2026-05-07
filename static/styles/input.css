@@ -22,9 +22,19 @@ body {
   background: rgba(99, 102, 241, 0.3);
   border-radius: 10px;
 }
-.row-task{
+.row-task {
   @apply opacity-40;
 }
 .completed {
   @apply bg-teal-500 border-teal-500 text-slate-950;
+}
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+
+.animate-spin-slow {
+    animation: spin 3s linear infinite;
 }

@@ -9,20 +9,26 @@
     </title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@latest/dist/cursorly.min.js"></script>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="{% static 'styles/output.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/output.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/input.css' %}" />
   </head>
   <body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col">
-    <script>
-      const cursor = Cursorly.init({
-        cursor: 16, // Index of the cursor icon (default: 0)
-        effect: { name: "trail", color: "rainbow" }, // Effect name and color are required
-      });
-    </script>
+    <!-- Loader Overlay -->
+<div id="loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-950">
+    <div class="relative flex items-center justify-center">
+        <!-- Outer Glowing Ring -->
+        <div class="w-16 h-16 rounded-full border-4 border-t-indigo-500 border-r-transparent border-b-purple-500 border-l-transparent animate-spin"></div>
+        <!-- Inner Static Icon -->
+        <div class="absolute text-indigo-400 text-xl">
+            Twos
+        </div>
+    </div>
+</div>
 
     <!-- Cosmic Navbar -->
     <nav class="cosmic-panel border-b sticky top-0 z-50">
@@ -107,10 +113,16 @@
         <a href="#" class="block text-slate-300 hover:text-indigo-400 py-2"
           ><i class="fa-solid fa-calendar-days mr-3"></i> Calendar</a
         >
-        <a href="{% url 'about' %}" class="block text-slate-300 hover:text-indigo-400 py-2"
+        <a
+          href="{% url 'about' %}"
+          class="block text-slate-300 hover:text-indigo-400 py-2"
           ><i class="fa-solid fa-circle-info mr-3"></i> About</a
         >
-        <a href="{% url 'profile' %}" class="block text-slate-300 hover:text-indigo-400 py-2"><i class="fa-solid fa-circle-user mr-3"></i> Profile</a>
+        <a
+          href="{% url 'profile' %}"
+          class="block text-slate-300 hover:text-indigo-400 py-2"
+          ><i class="fa-solid fa-circle-user mr-3"></i> Profile</a
+        >
       </div>
     </nav>
 
