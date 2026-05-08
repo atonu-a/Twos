@@ -4,11 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Orbit Tasks - {% block title %}Cosmic Command Centre{% endblock %}
-    </title>
+    <title>Twos - {% block title %}Cosmic Command Centre{% endblock %}</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@latest/dist/cursorly.min.js"></script>
+
 
     <link
       rel="stylesheet"
@@ -19,16 +18,21 @@
   </head>
   <body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col">
     <!-- Loader Overlay -->
-<div id="loader" class="fixed inset-0 z-[9999] flex items-center justify-center">
-    <div class="relative flex items-center justify-center">
+    <div
+      id="loader"
+      class="fixed inset-0 z-[9999] flex items-center justify-center"
+    >
+      <div class="relative flex items-center justify-center">
         <!-- Outer Glowing Ring -->
-        <div class="w-16 h-16 rounded-full border-4 border-t-indigo-500 border-r-transparent border-b-purple-500 border-l-transparent animate-spin"></div>
+        <div
+          class="w-16 h-16 rounded-full border-4 border-t-indigo-500 border-r-transparent border-b-purple-500 border-l-transparent animate-spin"
+        ></div>
         <!-- Inner Static Icon -->
         <div class="absolute text-indigo-400 text-xl">
-            <i class="fa-solid fa-frog fa-bounce"></i>
+          <i class="fa-solid fa-frog fa-bounce"></i>
         </div>
+      </div>
     </div>
-</div>
 
     <!-- Cosmic Navbar -->
     <nav class="cosmic-panel border-b sticky top-0 z-50">
