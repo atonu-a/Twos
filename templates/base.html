@@ -5,15 +5,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Twos - {% block title %}Cosmic Command Centre{% endblock %}</title>
+
+    <!-- Tailwind v4 -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@latest/dist/cursorly.min.js"></script>
 
-
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="{% static 'styles/output.css' %}" />
+
     <link rel="stylesheet" href="{% static 'styles/input.css' %}" />
   </head>
   <body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col">
@@ -64,6 +65,7 @@
               <i class="fa-solid fa-layer-group"></i>
             </a>
             <button
+              onclick="toggleCalendarPopup()"
               title="Calendar"
               class="text-slate-400 hover:text-indigo-400 relative"
             >
@@ -99,7 +101,7 @@
             <i class="fa-solid fa-bell"></i>
           </button>
           <button id="menuBtn" class="text-slate-200 p-2">
-            <i class="fa-solid fa-bars-staggered text-xl"></i>
+            <i class="fa-solid fa-bars text-xl"></i>
           </button>
         </div>
       </div>
@@ -114,9 +116,12 @@
           class="block text-slate-300 hover:text-indigo-400 py-2"
           ><i class="fa-solid fa-layer-group mr-3"></i> Dashboard</a
         >
-        <a href="#" class="block text-slate-300 hover:text-indigo-400 py-2"
-          ><i class="fa-solid fa-calendar-days mr-3"></i> Calendar</a
+        <button
+          onclick="toggleCalendarPopup()"
+          class="block text-slate-300 hover:text-indigo-400 py-2"
         >
+          <i class="fa-solid fa-calendar-days mr-3"></i> Calendar
+        </button>
         <a
           href="{% url 'about' %}"
           class="block text-slate-300 hover:text-indigo-400 py-2"
@@ -130,11 +135,36 @@
       </div>
     </nav>
 
+    {% comment %} Timepop up {% endcomment %}
+    <div
+      id="timePopup"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm"
+    >
+      <div
+        class="bg-slate-900 border border-slate-700 p-6 rounded-2xl shadow-2xl max-w-xs w-full text-center"
+      >
+        <h3 class="text-indigo-300 font-bold mb-2">Current Mission Clock</h3>
+        <p class="text-slate-200 text-2xl font-mono">{% now "h:i A" %}</p>
+        <p class="text-slate-500 text-sm mb-4">{% now "l, j F Y" %}</p>
+
+        <button
+          onclick="toggleCalendarPopup()"
+          class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-indigo-500 transition"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
     <!-- Main Content -->
     <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6">
       {% block content %}{% endblock %}
     </main>
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@latest/dist/cursorly.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
-    <script src="{% static 'js/app.js' %}"></script>
+
+    <script type="module" src="{% static 'js/app.js' %}"></script>
   </body>
 </html>

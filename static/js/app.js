@@ -1,9 +1,12 @@
 // Simple Mobile Toggle
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
-menuBtn.addEventListener("click", () => {
-  mobileMenu.classList.toggle("hidden");
-});
+if (menuBtn && mobileMenu) {
+  menuBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // যেন নিচের window ক্লিক ইভেন্ট ট্রিগার না হয়
+    mobileMenu.classList.toggle("hidden");
+  });
+}
 
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
@@ -13,13 +16,18 @@ window.addEventListener("load", () => {
   }, 300);
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const calendarEl = document.getElementById("calendar");
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: "dayGridMonth",
-    themeSystem: "standard",
-    events: "/api/get-tasks/", // এই URL থেকে জ্যাংগো ডাটা পাঠাবে
-    eventColor: "#6366f1", // আপনার থিমের Indigo কালার
-  });
-  calendar.render();
+window.toggleCalendarPopup = function () {
+  const popup = document.getElementById("timePopup");
+  if (popup) {
+    popup.classList.toggle("hidden");
+  } else {
+    console.error("ID 'timePopup' was not found in the DOM.");
+  }
+};
+
+window.addEventListener("click", function (e) {
+  const popup = document.getElementById("timePopup");
+  if (e.target === popup) {
+    popup.classList.add("hidden");
+  }
 });
