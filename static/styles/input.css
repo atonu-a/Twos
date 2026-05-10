@@ -1,5 +1,9 @@
 /* npx @tailwindcss/cli -i static/styles/input.css -o static/styles/output.css --watch */
+
+/* ./tailwindcss -i static/styles/input.css -o static/styles/output.css --watch */
 @import "tailwindcss";
+@plugin "daisyui";
+
 body,
 #loader {
   background-color: #020617;
@@ -40,56 +44,4 @@ body,
 
 .animate-spin-slow {
   animation: spin 3s linear infinite;
-}
-
-
-/* Calendar */
-/* FullCalendar Custom Tailwinding */
-#calendar {
-    @apply text-slate-200 border-none font-sans;
-}
-
-/* Header toolbar styling */
-.fc .fc-toolbar-title {
-    @apply text-lg sm:text-xl font-bold text-indigo-300 !important;
-}
-
-.fc .fc-button-primary {
-    @apply bg-slate-800 border-slate-700 hover:bg-indigo-600 hover:border-indigo-500 transition-all shadow-md !important;
-}
-
-.fc .fc-button-active {
-    @apply bg-indigo-600 border-indigo-500 !important;
-}
-
-/* Calendar Grid Styling */
-.fc-theme-standard td, .fc-theme-standard th {
-    @apply border-slate-800/60 !important;
-}
-
-.fc-col-header-cell {
-    @apply py-3 bg-slate-900/50 text-slate-400 font-medium uppercase tracking-widest text-xs !important;
-}
-
-.fc-daygrid-day {
-    @apply transition-colors hover:bg-slate-900/30 !important;
-}
-
-/* Today's Highlight */
-.fc-day-today {
-    @apply bg-indigo-500/10 !important;
-}
-
-/* Event Styling */
-.fc-event {
-    @apply bg-indigo-600 border-none rounded-md px-2 py-0.5 text-xs font-medium shadow-sm cursor-pointer hover:scale-105 transition-transform !important;
-}
-
-.fc-event-title {
-    @apply font-semibold !important;
-}
-
-/* Scrollbar for the calendar */
-.fc-scroller {
-    @apply custom-scrollbar !important; /* আপনার আগের তৈরি করা কাস্টম স্ক্রলবার ক্লাস */
 }

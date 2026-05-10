@@ -8,6 +8,7 @@ if (menuBtn && mobileMenu) {
   });
 }
 
+//Page loader
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
 
@@ -16,18 +17,19 @@ window.addEventListener("load", () => {
   }, 300);
 });
 
-window.toggleCalendarPopup = function () {
-  const popup = document.getElementById("timePopup");
-  if (popup) {
-    popup.classList.toggle("hidden");
-  } else {
-    console.error("ID 'timePopup' was not found in the DOM.");
-  }
-};
 
-window.addEventListener("click", function (e) {
-  const popup = document.getElementById("timePopup");
-  if (e.target === popup) {
-    popup.classList.add("hidden");
-  }
-});
+//calender toggle
+const calendarBtn = document.querySelectorAll(".calendar-btn");
+const crossBtn = document.getElementById("cross-btn");
+const calendarContainer = document.querySelector(".calendar-container");
+
+calendarBtn.forEach((btn)=>{
+  btn.addEventListener("click", ()=>{
+    calendarContainer.classList.toggle("hidden");
+  });
+})
+
+
+crossBtn.addEventListener("click", ()=>{
+  calendarContainer.classList.toggle("hidden");
+})

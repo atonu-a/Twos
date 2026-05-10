@@ -5,6 +5,10 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from django.utils import timezone
 from .models import *
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from django.contrib.auth import login,logout
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -59,15 +63,28 @@ def toggle_task(request, task_id):
 def about(request):
     return render(request, "about.html")
 
+@login_required
 def profile(request):
     return render(request, "profile.html")
 
 def login(request):
     return render(request,"login.html")
 
-def register(request):
-    return render(request,"registration.html")
+
 
 
 def edit(request):
     return render(request,"edit_profile.html")
+
+
+
+# Login registration system
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(profile)
+    return render(request,"registration.html")
