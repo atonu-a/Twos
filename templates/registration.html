@@ -3,44 +3,60 @@
 {% block title %}Join Twos | Register{% endblock %}
 
 {% block content %}
-<div class="max-w-md mx-auto mt-10">
-    <div class="cosmic-panel rounded-3xl p-8 shadow-2xl border border-indigo-500/20">
+<div class="max-w-md mx-auto mt-10 px-4">
+    <div class="cosmic-panel rounded-3xl p-8 shadow-2xl border border-indigo-500/20 bg-slate-900/50 backdrop-blur-md">
         <div class="text-center mb-8">
             <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-300 to-purple-400 bg-clip-text text-transparent">
                 Start Your Mission</h2>
-            <p class="text-slate-400 mt-2">Create an account to track your orbits</p>
+            <p class="text-slate-400 mt-2 text-sm">Create an account to track your orbits</p>
         </div>
 
-        <form method="POST" class="space-y-5">
+        <form method="POST" class="space-y-4">
             {% csrf_token %}
-            <div>
-                <label class="block text-sm font-medium text-slate-300 mb-2">Username</label>
-                <input type="text" name="username"
-                    class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500 transition"
-                    placeholder="cosmic_traveler">
+
+            <!-- গ্লোবাল এরর মেসেজ -->
+            {% if form.non_field_errors %}
+            <div class="bg-red-500/10 border border-red-500/50 text-red-400 text-xs p-3 rounded-xl">
+                {% for error in form.non_field_errors %} {{ error }} {% endfor %}
             </div>
+            {% endif %}
+
+            <!-- ফর্ম ফিল্ড লুপ  -->
+            {% for field in form %}
             <div>
-                <label class="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
-                <input type="email" name="email"
-                    class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500 transition"
-                    placeholder="name@galaxy.com">
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">
+                    {{ field.label }}
+                </label>
+
+                {{ field }} 
+
+                {% if field.errors %}
+                <p class="text-red-400 text-[10px] mt-1 ml-1 uppercase font-bold tracking-tighter">
+                    {{ field.errors.0 }}
+                </p>
+                {% endif %}
+
+                {% if field.help_text %}
+                <p class="text-slate-600 text-[10px] mt-1 ml-1 italic leading-tight">
+                    {{ field.help_text|safe }}
+                </p>
+                {% endif %}
             </div>
-            <div>
-                <label class="block text-sm font-medium text-slate-300 mb-2">Password</label>
-                <input type="password" name="password"
-                    class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500 transition"
-                    placeholder="••••••••">
-            </div>
+            {% endfor %}
 
             <button type="submit"
-                class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.02] active:scale-95 text-white py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/25 mt-4">
+                class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.02] active:scale-95 text-white py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/25 mt-6 uppercase tracking-widest text-sm">
                 Initialize Account
             </button>
         </form>
 
-        <p class="text-center text-slate-400 mt-6 text-sm">
-            Already in the orbit? <a href="{% url 'login' %}" class="text-indigo-400 hover:underline">Login here</a>
+        <p class="text-center text-slate-400 mt-8 text-xs">
+            Already in the orbit? <a href="{% url 'login' %}" class="text-indigo-400 hover:underline font-bold">Login
+                here</a>
         </p>
     </div>
 </div>
+
+
+
 {% endblock %}

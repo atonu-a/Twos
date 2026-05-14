@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from .models import *
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
-from django.contrib.auth import login,logout
+from django.contrib.auth import login as user_login ,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -65,16 +65,15 @@ def about(request):
 
 @login_required
 def profile(request):
-    return render(request, "profile.html")
+    profile, created = Profile.objects.get_or_create(user = request.user)
+    data = {
+        'profile':profile
+    }
+    return render(request, "profile.html", data)
 
 def login(request):
     return render(request,"login.html")
 
-
-
-
-def edit(request):
-    return render(request,"edit_profile.html")
 
 
 
@@ -85,6 +84,27 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect(profile)
-    return render(request,"registration.html")
+
+            Profile.objects.get_or_create(user=user)
+            user_login(request, user)
+            return redirect("edit")
+        else:
+
+            print(form.errors) 
+    else:
+        form = UserCreationForm()
+    
+    return render(request, "registration.html", {'form': form})
+
+def edit(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    if request.method == 'POST':
+        print(request.POST)
+        profile.full_name = request.POST.get("full_name", "")
+        profile.bio = request.POST.get("bio", "")
+        profile.location = request.POST.get("location", "")
+
+        
+        profile.save()
+        return redirect("profile")
+    return render(request, "edit_profile.html", {"profile":profile})
