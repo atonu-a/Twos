@@ -41,3 +41,12 @@ document.querySelectorAll("input").forEach((input) => {
       "w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500 transition placeholder-slate-700";
   }
 });
+
+
+// Profile picture upload
+document.getElementById('profile_pic_input').onchange = evt =>{
+  const [file] = evt.target.files;
+  if (file) {
+    document.getElementById('avatarPreview').src = URL.createObjectURL(file);
+  }
+}

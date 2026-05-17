@@ -36,10 +36,14 @@
         <p class="text-slate-400 my-4 max-w-lg leading-relaxed mx-auto sm:mx-0">
           {{request.user.profile.bio}}
         </p>
+        <form action="{% url 'logout' %}" method="POST" class="inline">
+          {% csrf_token %}
+          <button type="submit"
+            class=" transition text-base text-red-500 font-bold cursor-pointer">
+            <i class="fa-solid fa-right-from-bracket mr-2"></i> Log Out
+          </button>
+        </form>
 
-        <a href="{% url 'login' %}" class="text-base text-red-500 font-bold"
-        ><i class="fa-solid fa-right-from-bracket mr-3"></i>Logout</a
-      >
       </div>
       
       

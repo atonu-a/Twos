@@ -6,11 +6,11 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from .models import *
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
-from django.contrib.auth import login as user_login ,logout
+from django.contrib.auth import login as user_login ,logout as user_logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-
+@login_required(login_url="login")
 def index(request):
     today = timezone.now().date()
     
@@ -35,6 +35,7 @@ def index(request):
     return render(request, 'index.html', data)
 
 
+@login_required(login_url="login")
 def add_task(request):
     if request.method == "POST":
         name = request.POST.get("task_name")
@@ -48,12 +49,13 @@ def add_task(request):
     
     return redirect("index")
 
+@login_required(login_url="login")
 def delete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     task.delete()
     return redirect("index")
 
-
+@login_required(login_url="login")
 def toggle_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     task.is_completed = not task.is_completed
@@ -63,7 +65,8 @@ def toggle_task(request, task_id):
 def about(request):
     return render(request, "about.html")
 
-@login_required
+
+@login_required(login_url="login")
 def profile(request):
     profile, created = Profile.objects.get_or_create(user = request.user)
     data = {
@@ -71,13 +74,27 @@ def profile(request):
     }
     return render(request, "profile.html", data)
 
-def login(request):
-    return render(request,"login.html")
-
-
-
 
 # Login registration system
+def login(request):
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            user_login(request, user)
+            return redirect("index")
+    else:
+        form = AuthenticationForm()
+    data = {
+        "form":form
+    }
+    return render(request,"login.html",data)
+
+def logout(request):
+    if request.method == "POST":
+        user_logout(request)
+        return redirect("login")
+    return redirect("index")
 
 def register(request):
     if request.method == "POST":
@@ -95,14 +112,16 @@ def register(request):
         form = UserCreationForm()
     
     return render(request, "registration.html", {'form': form})
-
+@login_required(login_url="login")
 def edit(request):
     profile = get_object_or_404(Profile, user=request.user)
     if request.method == 'POST':
         print(request.POST)
-        profile.full_name = request.POST.get("full_name", "")
+        profile.full_name = request.POST.get("full_name", profile.full_name)
         profile.bio = request.POST.get("bio", "")
         profile.location = request.POST.get("location", "")
+        if request.FILES.get("profile_pic"):
+            profile.profile_pic = request.FILES.get("profile_pic")
 
         
         profile.save()

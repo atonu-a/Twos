@@ -9,11 +9,15 @@ class Task(models.Model):
         ('Medium', "Medium"),
         ('High', "High")
     ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks")
+    
     name = models.CharField(max_length=50)
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default="Low")
     is_completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     due_date = models.DateField(null=True, blank=True)
+
     
     
     def __anarchy__(self):
@@ -28,6 +32,9 @@ class Profile(models.Model):
     location = models.TextField(blank=True, null=True)
     
     joined_at = models.DateTimeField(auto_now_add=True)
+    
+    github = models.URLField(blank=True, null=True)
+    website = models.URLField(blank=True, null=True)
     
     def __str__(self):
         return f"{self.user.username}'s Profile"
