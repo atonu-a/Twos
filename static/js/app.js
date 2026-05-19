@@ -33,6 +33,42 @@ crossBtn.addEventListener("click", () => {
 });
 
 
+// Notification toggle
+document.addEventListener("DOMContentLoaded", () => {
+
+  const notiButtons = document.querySelectorAll(".notification");
+  const notiDropdown = document.getElementById("notiDropdown");
+
+
+  if (notiButtons.length > 0 && notiDropdown) {
+
+    notiButtons.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        notiDropdown.classList.toggle("hidden");
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      let isClickInsideButtons = false;
+      notiButtons.forEach((btn) => {
+        if (btn.contains(e.target)) {
+          isClickInsideButtons = true;
+        }
+      });
+
+      if (!notiDropdown.contains(e.target) && !isClickInsideButtons) {
+        notiDropdown.classList.add("hidden");
+      }
+    });
+য়
+    notiDropdown.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  }
+});
+
+
 
 
 document.querySelectorAll("input").forEach((input) => {
@@ -44,9 +80,14 @@ document.querySelectorAll("input").forEach((input) => {
 
 
 // Profile picture upload
-document.getElementById('profile_pic_input').onchange = evt =>{
-  const [file] = evt.target.files;
-  if (file) {
-    document.getElementById('avatarPreview').src = URL.createObjectURL(file);
-  }
+const profilePicInput = document.getElementById('profile_pic_input');
+const avatarPreview = document.getElementById('avatarPreview');
+
+if (profilePicInput && avatarPreview) {
+    profilePicInput.onchange = evt => {
+        const [file] = evt.target.files;
+        if (file) {
+            avatarPreview.src = URL.createObjectURL(file);
+        }
+    };
 }
