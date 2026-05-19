@@ -4,3 +4,4 @@ sqlparse
 gunicorn
 psycopg2-binary
 Pillow
+whitenoise
