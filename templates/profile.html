@@ -54,13 +54,13 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- Left Stats -->
     <div class="lg:col-span-1 space-y-6">
-      <div class="cosmic-panel rounded-2xl p-6 border border-slate-800/60">
+      <div class="cosmic-panel  rounded-2xl p-6 border border-slate-800/60">
         <h3
           class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4"
         >
           Mission Stats
         </h3>
-        <div class="grid grid-cols-3 lg:grid-cols-1 gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
           <div
             class="flex flex-col lg:flex-row lg:justify-between lg:items-center p-3 bg-slate-900/50 rounded-xl lg:bg-transparent lg:p-0"
           >
@@ -68,7 +68,7 @@
               >Total Orbits</span
             >
             <span class="font-bold text-indigo-400 text-lg lg:text-base"
-              >142</span
+              >{{ total_tasks }}</span
             >
           </div>
           <div
@@ -78,10 +78,10 @@
               >Success</span
             >
             <span class="font-bold text-teal-400 text-lg lg:text-base"
-              >94%</span
+              >{{success_rate}}%</span
             >
           </div>
-          <div
+          {% comment %} <div
             class="flex flex-col lg:flex-row lg:justify-between lg:items-center p-3 bg-slate-900/50 rounded-xl lg:bg-transparent lg:p-0"
           >
             <span class="text-slate-400 text-xs lg:text-slate-300 lg:text-base"
@@ -90,7 +90,7 @@
             <span class="font-bold text-purple-400 text-lg lg:text-base"
               >Elite</span
             >
-          </div>
+          </div> {% endcomment %}
         </div>
       </div>
     </div>
@@ -152,42 +152,46 @@
       </div>
 
       <!-- Recent Activity -->
-      <div class="cosmic-panel rounded-2xl p-6 border border-slate-800/60">
-        <h3 class="text-lg font-semibold mb-4 text-slate-100">
-          Recent Activity
-        </h3>
-        <div class="space-y-4">
-          <div class="flex items-start gap-4 text-sm group">
-            <div
-              class="mt-1.5 w-2 h-2 shrink-0 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]"
-            ></div>
-            <div
-              class="flex flex-col sm:flex-row sm:justify-between w-full gap-1"
-            >
-              <p class="text-slate-300">
-                Completed mission
-                <span class="text-white italic">"Setup Django Backend"</span>
-              </p>
-              <span class="text-slate-500 text-xs">2h ago</span>
-            </div>
-          </div>
-          <div class="flex items-start gap-4 text-sm group">
-            <div
-              class="mt-1.5 w-2 h-2 shrink-0 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]"
-            ></div>
-            <div
-              class="flex flex-col sm:flex-row sm:justify-between w-full gap-1"
-            >
-              <p class="text-slate-300">
-                Joined the
-                <span class="text-white font-medium">CSS Tailwind v4</span>
-                fleet
-              </p>
-              <span class="text-slate-500 text-xs">5h ago</span>
-            </div>
-          </div>
+      <div class="cosmic-panel rounded-2xl p-6 border border-slate-800/60 bg-slate-900/40 backdrop-blur-md">
+  <h3 class="text-lg font-semibold mb-4 text-slate-100">
+    Recent Activity
+  </h3>
+  <div class="space-y-4">
+    {% for log in recent %}
+      <div class="flex items-start gap-4 text-sm group">
+        
+        {% if log.action == 'Accomplished' %}
+          <div class="mt-1.5 w-2 h-2 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+        {% elif log.action == 'Initiated' %}
+          <div class="mt-1.5 w-2 h-2 shrink-0 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]"></div>
+        {% elif log.action == 'Reopened' %}
+          <div class="mt-1.5 w-2 h-2 shrink-0 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]"></div>
+        {% else %}
+          <div class="mt-1.5 w-2 h-2 shrink-0 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]"></div>
+        {% endif %}
+
+        <div class="flex flex-col sm:flex-row sm:justify-between w-full gap-1">
+          <p class="text-slate-300">
+            {% if log.action == 'Accomplished' %}
+              Completed mission 
+            {% elif log.action == 'Initiated' %}
+              Initiated new mission 
+            {% elif log.action == 'Reopened' %}
+              Reactivated mission 
+            {% else %}
+              Aborted mission 
+            {% endif %}
+            <span class="text-white italic">"{{ log.task_name }}"</span>
+          </p>
+          <span class="text-slate-500 text-xs shrink-0">{{ log.created_at|timesince }} ago</span>
         </div>
+
       </div>
+    {% empty %}
+      <p class="text-sm text-slate-500 italic text-center py-2">No space activity recorded yet.</p>
+    {% endfor %}
+  </div>
+</div>
     </div>
   </div>
 </div>

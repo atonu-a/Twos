@@ -42,16 +42,32 @@ def add_task(request):
         priority = request.POST.get("priority")
         due_date = request.POST.get("due_date")
         Task.objects.create(
+            user=request.user,
             name=name, 
             priority=priority,
             due_date=due_date if due_date else None
-            )
+        )
+        
+        MissionLog.objects.create(
+            user = request.user,
+            action = 'Initiated',
+            task_name = name,
+        )
+        
     
     return redirect("index")
 
 @login_required(login_url="login")
 def delete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
+    
+    MissionLog.objects.create(
+        user=request.user,
+        action='Aborted',
+        task_name=task.name
+    )
+    
+    
     task.delete()
     return redirect("index")
 
@@ -60,6 +76,15 @@ def toggle_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     task.is_completed = not task.is_completed
     task.save()
+    
+    
+    action_type = 'Accomplished' if task.is_completed else 'Reopened'
+    
+    MissionLog.objects.create(
+        user=request.user,
+        action=action_type,
+        task_name=task.name
+    )
     return redirect("index")
     
 def about(request):
@@ -69,8 +94,22 @@ def about(request):
 @login_required(login_url="login")
 def profile(request):
     profile, created = Profile.objects.get_or_create(user = request.user)
+    tasks = Task.objects.order_by("-created_at")
+    total_tasks = tasks.count()
+    completed_tasks = tasks.filter(is_completed=False)
+    total_completed_tasks = completed_tasks.count()
+    if total_tasks > 0 :
+        success_rate = int((total_completed_tasks/total_tasks) * 100)
+        
+    else:
+        success_rate = 0
+    recent = MissionLog.objects.filter(user=request.user).order_by("-created_at")[:5]
     data = {
-        'profile':profile
+        'profile' : profile,
+        'total_tasks' : total_tasks,
+        'recent' : recent,
+        'total_completed_tasks' : total_completed_tasks,
+        'success_rate' : success_rate,
     }
     return render(request, "profile.html", data)
 
@@ -127,3 +166,11 @@ def edit(request):
         profile.save()
         return redirect("profile")
     return render(request, "edit_profile.html", {"profile":profile})
+
+@login_required(login_url="login")
+def activities(request):
+    recent = MissionLog.objects.filter(user=request.user).order_by("-created_at")
+    data = {
+        'recent' : recent
+    }
+    return render(request, "activity.html", data)

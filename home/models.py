@@ -46,3 +46,19 @@ class Profile(models.Model):
         name = self.full_name or self.user.username
         return f"https://ui-avatars.com/api/?name={name}&size=128&background=6366f1&color=fff"
     
+    
+class MissionLog(models.Model):
+    ACTION_CHOICES = [
+        ('Initiated', 'Initiated'),
+        ('Accomplished', 'Accomplished'),
+        ('Reopened', 'Reopened'),
+        ('Aborted', 'Aborted'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="mission_logs")
+    action = models.CharField(max_length=20, choices=ACTION_CHOICES)
+    task_name = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.action} - {self.task_name}"

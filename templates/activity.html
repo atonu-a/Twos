@@ -1,0 +1,29 @@
+{% extends 'base.html' %} 
+{% block title %}Commander Activity | Twos {% endblock %}
+{% block content %}
+
+<div class="relative border-l border-indigo-500/30 ml-3 space-y-6">
+    {% for log in recent %}
+        <div class="relative pl-6">
+            {% if log.action == 'Accomplished' %}
+                <span class="absolute -left-[6px] top-1.5 w-3 h-3 bg-emerald-500 rounded-full ring-4 ring-slate-950"></span>
+                <p class="text-sm font-medium text-emerald-400">Mission Accomplished</p>
+            {% elif log.action == 'Initiated' %}
+                <span class="absolute -left-[6px] top-1.5 w-3 h-3 bg-indigo-500 rounded-full ring-4 ring-slate-950"></span>
+                <p class="text-sm font-medium text-indigo-400">Mission Initiated</p>
+            {% elif log.action == 'Reopened' %}
+                <span class="absolute -left-[6px] top-1.5 w-3 h-3 bg-amber-500 rounded-full ring-4 ring-slate-950"></span>
+                <p class="text-sm font-medium text-amber-400">Mission Reactivated</p>
+            {% else %}
+                <span class="absolute -left-[6px] top-1.5 w-3 h-3 bg-rose-500 rounded-full ring-4 ring-slate-950"></span>
+                <p class="text-sm font-medium text-rose-400">Mission Aborted</p>
+            {% endif %}
+            
+            <p class="text-xs text-slate-300 mt-0.5">{{ log.task_name }}</p>
+            <span class="text-[10px] text-slate-500 block mt-1">{{ log.created_at|timesince }} ago</span>
+        </div>
+    {% empty %}
+        <p class="text-xs text-slate-500 pl-4">No space activity recorded yet.</p>
+    {% endfor %}
+</div>
+{% endblock content %}
