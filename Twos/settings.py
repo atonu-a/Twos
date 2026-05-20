@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-load_dotenv()
-SECRET_KEY = os.getenv('SECRET_KEY')
+load_dotenv(BASE_DIR / '.env')
+SECRET_KEY = 'django-insecure-6&t(7xyu8$n2b8-hj+x+*+-k)ls4_iw10x_yhyu8smc#e+jfkp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
@@ -78,17 +78,23 @@ WSGI_APPLICATION = 'Twos.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+# সাময়িকভাবে সরাসরি আপনার সুপারবেস ইউআরএলটি এখানে বসিয়ে দিন
+# (টেস্ট হয়ে গেলে আমরা আবার এনভায়রনমেন্টে ফেরত যাব)
 
-if os.getenv('DATABASE_URL'):
+if os.getenv('RENDER'):
 
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-            ssl_require=True
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres.zlmclbdtzdvnwengmdur',  
+            'PASSWORD': 'GSb6C-6bV@-X?wd',       
+            'HOST': 'aws-1-ap-southeast-1.pooler.supabase.com',
+            'PORT': '6543',
+        }
     }
 else:
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
