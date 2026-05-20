@@ -14,23 +14,19 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     today = timezone.now().date()
     
-    tasks = Task.objects.filter(user = request.user).order_by("-created_at")
-    completed_tasks = tasks.filter(is_completed=False)
-    total_completed_tasks = completed_tasks.count();
-    high_priority_tasks = tasks.filter(priority="High")
-    total_priority_tasks = high_priority_tasks.count()
-    future_tasks = tasks.filter(due_date__gt=today)
-    total_future_tasks = future_tasks.count()
+
+    tasks = Task.objects.filter(user=request.user).order_by("-created_at")
+    
+
+    total_completed_tasks = tasks.filter(is_completed=False).count()
+    total_priority_tasks = tasks.filter(priority="High").count()
+    total_future_tasks = tasks.filter(due_date__gt=today).count()
     
     data = {
-        'tasks':tasks,
-        'completed_tasks':completed_tasks,
-        'total_completed_tasks' : total_completed_tasks,
-        'high_priority_tasks': high_priority_tasks,
-        'total_priority_tasks' : total_priority_tasks,
-        'future_tasks':future_tasks,
-        'total_future_tasks' : total_future_tasks,
-        
+        'tasks': tasks,
+        'total_completed_tasks': total_completed_tasks,
+        'total_priority_tasks': total_priority_tasks,
+        'total_future_tasks': total_future_tasks,
     }
     return render(request, 'index.html', data)
 
