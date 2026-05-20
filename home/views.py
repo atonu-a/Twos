@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     today = timezone.now().date()
     
-    tasks = Task.objects.order_by("-created_at")
+    tasks = Task.objects.filter(user = request.user).order_by("-created_at")
     completed_tasks = tasks.filter(is_completed=False)
     total_completed_tasks = completed_tasks.count();
     high_priority_tasks = tasks.filter(priority="High")
