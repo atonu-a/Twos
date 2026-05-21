@@ -8,7 +8,7 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login as user_login ,logout as user_logout
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+
 
 @login_required(login_url="login")
 def index(request):
