@@ -92,7 +92,7 @@ def profile(request):
     profile, created = Profile.objects.get_or_create(user = request.user)
     tasks = Task.objects.order_by("-created_at")
     total_tasks = tasks.count()
-    completed_tasks = tasks.filter(is_completed=False)
+    completed_tasks = tasks.filter(is_completed=True)
     total_completed_tasks = completed_tasks.count()
     if total_tasks > 0 :
         success_rate = int((total_completed_tasks/total_tasks) * 100)
