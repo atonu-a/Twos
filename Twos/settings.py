@@ -78,8 +78,7 @@ WSGI_APPLICATION = 'Twos.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-# সাময়িকভাবে সরাসরি আপনার সুপারবেস ইউআরএলটি এখানে বসিয়ে দিন
-# (টেস্ট হয়ে গেলে আমরা আবার এনভায়রনমেন্টে ফেরত যাব)
+
 
 if os.getenv('RENDER'):
 

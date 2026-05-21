@@ -18,13 +18,13 @@ def index(request):
     tasks = Task.objects.filter(user=request.user).order_by("-created_at")
     
 
-    total_completed_tasks = tasks.filter(is_completed=False).count()
+    total_active_tasks = tasks.filter(is_completed=False).count()
     total_priority_tasks = tasks.filter(priority="High").count()
     total_future_tasks = tasks.filter(due_date__gt=today).count()
     
     data = {
         'tasks': tasks,
-        'total_completed_tasks': total_completed_tasks,
+        'total_active_tasks': total_active_tasks,
         'total_priority_tasks': total_priority_tasks,
         'total_future_tasks': total_future_tasks,
     }
