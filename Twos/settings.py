@@ -87,7 +87,7 @@ if os.getenv('RENDER'):
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'postgres',
             'USER': 'postgres.zlmclbdtzdvnwengmdur',  
-            'PASSWORD': 'GSb6C-6bV@-X?wd',       
+            'PASSWORD': 'AtonuRoy1234Ch',       
             'HOST': 'aws-1-ap-southeast-1.pooler.supabase.com',
             'PORT': '6543',
         }
