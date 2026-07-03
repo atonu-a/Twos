@@ -125,12 +125,14 @@ def login(request):
         if form.is_valid():
             user = form.get_user()
             user_login(request, user)
+            messages.success(request,"Welcome Back Commander!🥳")
             return redirect("index")
     else:
         form = AuthenticationForm()
     data = {
         "form":form
     }
+
     return render(request,"login.html",data)
 
 def logout(request):
@@ -147,13 +149,15 @@ def register(request):
 
             Profile.objects.get_or_create(user=user)
             user_login(request, user)
+            messages.success(request,"Welcome Commander!🎆")
             return redirect("edit")
         else:
 
             print(form.errors) 
     else:
         form = UserCreationForm()
-    
+        
+
     return render(request, "registration.html", {'form': form})
 @login_required(login_url="login")
 def edit(request):
