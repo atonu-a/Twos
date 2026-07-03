@@ -168,6 +168,7 @@ def edit(request):
 
         
         profile.save()
+        messages.success(request,"Commander Profile Updated Successfully")
         return redirect("profile")
     return render(request, "edit_profile.html", {"profile":profile})
 
