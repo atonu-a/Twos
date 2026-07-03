@@ -8,6 +8,7 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login as user_login ,logout as user_logout
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 @login_required(login_url="login")
@@ -43,12 +44,14 @@ def add_task(request):
             priority=priority,
             due_date=due_date if due_date else None
         )
+        messages.info(request, "Mission Initiated!")
         
         MissionLog.objects.create(
             user = request.user,
             action = 'Initiated',
             task_name = name,
         )
+        
         
     
     return redirect("index")
@@ -65,6 +68,7 @@ def delete_task(request, task_id):
     
     
     task.delete()
+    messages.error(request, "Mission Aborted!")
     return redirect("index")
 
 @login_required(login_url="login")
@@ -75,6 +79,10 @@ def toggle_task(request, task_id):
     
     
     action_type = 'Accomplished' if task.is_completed else 'Reopened'
+    if action_type=='Accomplished':
+        messages.success(request, "Mission Accomplished")
+    else:
+        messages.info(request, "Mission Reopened")
     
     MissionLog.objects.create(
         user=request.user,

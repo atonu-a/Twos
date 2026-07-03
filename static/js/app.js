@@ -3,7 +3,7 @@ const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 if (menuBtn && mobileMenu) {
   menuBtn.addEventListener("click", (e) => {
-    e.stopPropagation(); // যেন নিচের window ক্লিক ইভেন্ট ট্রিগার না হয়
+    e.stopPropagation();
     mobileMenu.classList.toggle("hidden");
   });
 }
@@ -61,13 +61,23 @@ document.addEventListener("DOMContentLoaded", () => {
         notiDropdown.classList.add("hidden");
       }
     });
-য়
+
     notiDropdown.addEventListener("click", (e) => {
       e.stopPropagation();
     });
   }
 });
 
+//Notification close btn
+const alertMsgs = document.querySelectorAll(".django-alert")
+
+
+alertMsgs.forEach((alert) => {
+  const alertClose = document.querySelector(".close-alert-btn");
+  alertClose.addEventListener("click", () => {
+    alert.remove()
+  });
+});
 
 
 
@@ -91,3 +101,6 @@ if (profilePicInput && avatarPreview) {
         }
     };
 }
+
+
+

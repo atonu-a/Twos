@@ -1,264 +1,230 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Twos - {% block title %}Cosmic Command Centre{% endblock %}</title>
 
-    <!-- Tailwind v4 -->
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twos - {% block title %}Cosmic Command Centre{% endblock %}</title>
 
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+  <!-- Tailwind v4 -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 
-    <link rel="stylesheet" href="{% static 'styles/output.css' %}" />
-  </head>
-  <body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col">
-    <!-- Loader Overlay -->
-    <div
-      id="loader"
-      class="fixed inset-0 z-[9999] flex items-center justify-center"
-    >
-      <div class="relative flex items-center justify-center">
-        <!-- Outer Glowing Ring -->
-        <div
-          class="w-16 h-16 rounded-full border-4 border-t-indigo-500 border-r-transparent border-b-purple-500 border-l-transparent animate-spin"
-        ></div>
-        <!-- Inner Static Icon -->
-        <div class="absolute text-indigo-400 text-xl">
-          <i class="fa-solid fa-frog fa-bounce"></i>
-        </div>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="{% static 'styles/output.css' %}" />
+</head>
+
+<body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+
+
+  <!-- Loader Overlay -->
+  <div id="loader" class="fixed inset-0 z-[9999] flex items-center justify-center">
+    <div class="relative flex items-center justify-center">
+      <!-- Outer Glowing Ring -->
+      <div
+        class="w-16 h-16 rounded-full border-4 border-t-indigo-500 border-r-transparent border-b-purple-500 border-l-transparent animate-spin">
+      </div>
+      <!-- Inner Static Icon -->
+      <div class="absolute text-indigo-400 text-xl">
+        <i class="fa-solid fa-frog fa-bounce"></i>
       </div>
     </div>
+  </div>
 
-    <!-- Cosmic Navbar -->
-    <nav class="cosmic-panel border-b sticky top-0 z-50">
-      <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center"
-      >
-        <!-- Logo -->
-        <div class="flex items-center gap-2">
-          <div
-            class="w-8 h-8 flex items-center justify-center text-indigo-400 bg-indigo-500/10 rounded-full border border-indigo-500/20"
-          >
-            <i class="fa-solid fa-user-astronaut text-sm"></i>
-          </div>
-          <a
-            class="text-xl font-bold bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent"
-            href="{% url 'index' %}"
-            >Twos</a
-          >
+  <!-- Cosmic Navbar -->
+  <nav class="cosmic-panel border-b sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <div
+          class="w-8 h-8 flex items-center justify-center text-indigo-400 bg-indigo-500/10 rounded-full border border-indigo-500/20">
+          <i class="fa-solid fa-user-astronaut text-sm"></i>
         </div>
+        <a class="text-xl font-bold bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent"
+          href="{% url 'index' %}">Twos</a>
+      </div>
 
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex items-center gap-8">
-          <div class="flex items-center gap-5 border-l border-slate-800 pl-8">
-            <a
-              title="Dashboard"
-              href="{% url 'index' %}"
-              class="text-slate-400 hover:text-indigo-400 transition flex items-center gap-2"
-            >
-              <i class="fa-solid fa-layer-group"></i>
-            </a>
-            <button
-              title="Calendar"
-              class="calendar-btn text-slate-400 hover:text-indigo-400 relative"
-            >
-              <i class="fa-solid fa-calendar-days"></i>
-            </button>
-            <button
-              title="Notifications"
-              id="notification"
-              class="notification text-slate-400 hover:text-indigo-400 relative"
-            >
-              <i class="fa-solid fa-bell"></i>
-              {% comment %}
-              <span
-                class="absolute -top-2 -right-2 w-4 h-4 bg-red-500 text-[10px] rounded-full flex items-center justify-center text-white"
-              ></span>
-              {% endcomment %}
-            </button>
-            <a
-              title="History"
-              href="{% url 'activities' %}"
-              class="text-slate-400 hover:text-indigo-400"
-            >
-              <i class="fa-solid fa-clock-rotate-left"></i>
-            </a>
-
-            <a
-              title="about"
-              href="{% url 'about' %}"
-              class="text-slate-400 hover:text-indigo-400"
-              ><i class="fa-solid fa-circle-info"></i
-            ></a>
-            <a title="profile" href="{% url 'profile' %}"
-              ><img
-                src="{{ request.user.profile.get_profile_pic }}"
-                class="w-8 h-8 rounded-full border border-slate-700"
-            /></a>
-          </div>
-        </div>
-
-        <!-- Mobile Menu Button -->
-        <div class="md:hidden flex items-center gap-4">
-          <button class="notification text-slate-400 relative p-2">
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-8">
+        <div class="flex items-center gap-5 border-l border-slate-800 pl-8">
+          <a title="Dashboard" href="{% url 'index' %}"
+            class="text-slate-400 hover:text-indigo-400 transition flex items-center gap-2">
+            <i class="fa-solid fa-layer-group"></i>
+          </a>
+          <button title="Calendar" class="calendar-btn text-slate-400 hover:text-indigo-400 relative">
+            <i class="fa-solid fa-calendar-days"></i>
+          </button>
+          <button title="Notifications" id="notification"
+            class="notification text-slate-400 hover:text-indigo-400 relative">
             <i class="fa-solid fa-bell"></i>
+            {% comment %}
+            <span
+              class="absolute -top-2 -right-2 w-4 h-4 bg-red-500 text-[10px] rounded-full flex items-center justify-center text-white"></span>
+            {% endcomment %}
           </button>
-          <button id="menuBtn" class="text-slate-200 p-2">
-            <i class="fa-solid fa-bars text-xl"></i>
-          </button>
+          <a title="History" href="{% url 'activities' %}" class="text-slate-400 hover:text-indigo-400">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </a>
+
+          <a title="about" href="{% url 'about' %}" class="text-slate-400 hover:text-indigo-400"><i
+              class="fa-solid fa-circle-info"></i></a>
+          <a title="profile" href="{% url 'profile' %}"><img src="{{ request.user.profile.get_profile_pic }}"
+              class="w-8 h-8 rounded-full border border-slate-700" /></a>
         </div>
       </div>
 
-      <!-- Mobile Drawer (Hidden by default) -->
-      <div
-        id="mobileMenu"
-        class="hidden md:hidden bg-slate-950 border-b border-slate-800 p-5 space-y-4"
-      >
-        <a
-          href="{% url 'index' %}"
-          class="block text-slate-300 hover:text-indigo-400 py-2"
-          ><i class="fa-solid fa-layer-group mr-3"></i> Dashboard</a
-        >
-        <button
-          class="calendar-btn block text-slate-300 hover:text-indigo-400 py-2"
-        >
-          <i class="fa-solid fa-calendar-days mr-3"></i> Calendar
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center gap-4">
+        <button class="notification text-slate-400 relative p-2">
+          <i class="fa-solid fa-bell"></i>
         </button>
-        <a
-          title="History"
-          href="{% url 'activities' %}"
-          class="calendar-btn block text-slate-300 hover:text-indigo-400 py-2"
-        >
-          <i class="fa-solid fa-clock-rotate-left mr-3"></i> Mission Logs
-        </a>
-        <a
-          href="{% url 'about' %}"
-          class="block text-slate-300 hover:text-indigo-400 py-2"
-          ><i class="fa-solid fa-circle-info mr-3"></i> About</a
-        >
-        <a
-          href="{% url 'profile' %}"
-          class="block text-slate-300 hover:text-indigo-400 py-2"
-          ><i class="fa-solid fa-circle-user mr-3"></i> Profile</a
-        >
-      </div>
-    </nav>
-
-    {% comment %} Calendar {% endcomment %}
-    <!-- Calendar Overlay/Modal -->
-    <div
-      id="calendarPopup"
-      class="calendar-container hidden fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4"
-    >
-      <div
-        class="relative bg-[#020617] w-full max-w-sm p-1 sm:p-6 pt-12 border border-slate-800 rounded-2xl shadow-2xl animate-in fade-in zoom-in duration-200"
-      >
-        <!-- Close Button -->
-        <button
-          id="cross-btn"
-          onclick="toggleCalendarPopup()"
-          class="absolute right-4 top-4 p-2 text-slate-400 hover:text-white hover:bg-red-500/20 rounded-xl transition-all"
-        >
-          <i class="fa-solid fa-xmark text-lg"></i>
+        <button id="menuBtn" class="text-slate-200 p-2">
+          <i class="fa-solid fa-bars text-xl"></i>
         </button>
-        <!-- Today's Display (Extra UI Component) -->
-        <div
-          class="my-6 pt-4 border-t border-slate-800 flex justify-between items-center"
-        >
-          <span
-            class="text-xs text-slate-500 uppercase tracking-widest font-semibold"
-            >Today</span
-          >
-          <span class="text-indigo-400 font-mono">{% now "d M, Y" %}</span>
-        </div>
-
-        <!-- Calendar Header/Body -->
-        <div class="text-slate-200">
-          <calendar-date class="cally w-full border-none bg-transparent">
-            <svg
-              aria-label="Previous"
-              class="fill-current size-5 text-indigo-400 hover:text-indigo-300 cursor-pointer"
-              slot="previous"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path fill="currentColor" d="M15.75 19.5 8.25 12l7.5-7.5"></path>
-            </svg>
-            <svg
-              aria-label="Next"
-              class="fill-current size-5 text-indigo-400 hover:text-indigo-300 cursor-pointer"
-              slot="next"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path fill="currentColor" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
-            </svg>
-            <calendar-month class="mt-4 w-full font-sans"></calendar-month>
-          </calendar-date>
-        </div>
       </div>
     </div>
 
-    {% comment %} Notifications {% endcomment %}
+    <!-- Mobile Drawer (Hidden by default) -->
+    <div id="mobileMenu" class="hidden md:hidden bg-slate-950 border-b border-slate-800 p-5 space-y-4">
+      <a href="{% url 'index' %}" class="block text-slate-300 hover:text-indigo-400 py-2"><i
+          class="fa-solid fa-layer-group mr-3"></i> Dashboard</a>
+      <button class="calendar-btn block text-slate-300 hover:text-indigo-400 py-2">
+        <i class="fa-solid fa-calendar-days mr-3"></i> Calendar
+      </button>
+      <a title="History" href="{% url 'activities' %}"
+        class="calendar-btn block text-slate-300 hover:text-indigo-400 py-2">
+        <i class="fa-solid fa-clock-rotate-left mr-3"></i> Mission Logs
+      </a>
+      <a href="{% url 'about' %}" class="block text-slate-300 hover:text-indigo-400 py-2"><i
+          class="fa-solid fa-circle-info mr-3"></i> About</a>
+      <a href="{% url 'profile' %}" class="block text-slate-300 hover:text-indigo-400 py-2"><i
+          class="fa-solid fa-circle-user mr-3"></i> Profile</a>
+    </div>
+  </nav>
+
+  {% comment %} Calendar {% endcomment %}
+  <!-- Calendar Overlay/Modal -->
+  <div id="calendarPopup"
+    class="calendar-container hidden fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
     <div
-      id="notiDropdown"
-      class="hidden absolute right-0 mt-3 w-80 bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl shadow-indigo-500/10 z-50 origin-top-right transition-all"
-    >
-      <div
-        class="flex items-center justify-between px-4 py-3.5 border-b border-slate-800/60"
-      >
-        <h4 class="text-sm font-bold text-slate-200 uppercase tracking-wider">
-          Mission Intel
-        </h4>
-        <span
-          class="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded-full border border-indigo-500/20 font-semibold"
-          >0 New</span
-        >
+      class="relative bg-[#020617] w-full max-w-sm p-1 sm:p-6 pt-12 border border-slate-800 rounded-2xl shadow-2xl animate-in fade-in zoom-in duration-200">
+      <!-- Close Button -->
+      <button id="cross-btn" onclick="toggleCalendarPopup()"
+        class="absolute right-4 top-4 p-2 text-slate-400 hover:text-white hover:bg-red-500/20 rounded-xl transition-all">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <!-- Today's Display (Extra UI Component) -->
+      <div class="my-6 pt-4 border-t border-slate-800 flex justify-between items-center">
+        <span class="text-xs text-slate-500 uppercase tracking-widest font-semibold">Today</span>
+        <span class="text-indigo-400 font-mono">{% now "d M, Y" as today %}{{ today }}</span>
       </div>
 
-      <div class="p-6 text-center space-y-3">
-        <div
-          class="w-12 h-12 bg-slate-950/80 border border-slate-800 rounded-full flex items-center justify-center mx-auto text-slate-600"
-        >
-          <i class="fa-solid fa-envelope-open text-xl"></i>
-        </div>
-        <div>
-          <p class="text-sm font-medium text-slate-300">
-            All notifications are viewed
-          </p>
-          <p class="text-xs text-slate-500 mt-1">
-            Your orbit is completely clear.
-          </p>
-        </div>
+      <!-- Calendar Header/Body -->
+      <div class="text-slate-200">
+        <calendar-date class="cally w-full border-none bg-transparent">
+          <svg aria-label="Previous" class="fill-current size-5 text-indigo-400 hover:text-indigo-300 cursor-pointer"
+            slot="previous" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+          </svg>
+          <svg aria-label="Next" class="fill-current size-5 text-indigo-400 hover:text-indigo-300 cursor-pointer"
+            slot="next" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path fill="currentColor" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
+          </svg>
+          <calendar-month class="mt-4 w-full font-sans"></calendar-month>
+        </calendar-date>
       </div>
+    </div>
+  </div>
 
+  {% comment %} Notifications {% endcomment %}
+  <div id="notiDropdown"
+    class="hidden absolute right-0 mt-3 w-80 bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl shadow-indigo-500/10 z-50 origin-top-right transition-all">
+    <div class="flex items-center justify-between px-4 py-3.5 border-b border-slate-800/60">
+      <h4 class="text-sm font-bold text-slate-200 uppercase tracking-wider">
+        Mission Intel
+      </h4>
+      <span
+        class="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded-full border border-indigo-500/20 font-semibold">0
+        New</span>
+    </div>
+
+    <div class="p-6 text-center space-y-3">
       <div
-        class="px-4 py-2.5 border-t border-slate-800/60 bg-slate-950/30 rounded-b-2xl text-center"
-      >
-        <a
-          href="{% url 'activities' %}"
-          class="text-xs text-indigo-400 hover:text-indigo-300 transition font-medium"
-        >
-          View Mission Logs
-        </a>
+        class="w-12 h-12 bg-slate-950/80 border border-slate-800 rounded-full flex items-center justify-center mx-auto text-slate-600">
+        <i class="fa-solid fa-envelope-open text-xl"></i>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-slate-300">
+          All notifications are viewed
+        </p>
+        <p class="text-xs text-slate-500 mt-1">
+          Your orbit is completely clear.
+        </p>
       </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6">
-      {% block content %}{% endblock %}
-    </main>
-    <!-- Libraries -->
-    <script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@latest/dist/cursorly.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-    <script type="module" src="https://unpkg.com/cally"></script>
+    <div class="px-4 py-2.5 border-t border-slate-800/60 bg-slate-950/30 rounded-b-2xl text-center">
+      <a href="{% url 'activities' %}" class="text-xs text-indigo-400 hover:text-indigo-300 transition font-medium">
+        View Mission Logs
+      </a>
+    </div>
+  </div>
 
-    <script type="module" src="{% static 'js/app.js' %}"></script>
-  </body>
+  <!-- Main Content -->
+  <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6">
+
+{% if messages %}
+    {% for message in messages %}
+    <div role="alert" class="django-alert alert {% if message.tags == 'error' %}alert-error{% elif message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %} flex justify-between items-center shadow-lg mb-2">
+      
+      <div class="flex items-center gap-2">
+        {% if message.tags == 'success' %}
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        {% elif message.tags == 'error' %}
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        {% elif message.tags == 'warning' %}
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        {% else %}
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        {% endif %}
+        <span>{{ message }}</span>
+      </div>
+
+      <button class="btn btn-sm btn-circle btn-ghost close-alert-btn text-black hover:text-white">✕</button>
+
+    </div>
+    {% endfor %}
+{% endif %}
+
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/gh/iamashruu/cursorly.js@latest/dist/cursorly.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <script type="module" src="https://unpkg.com/cally"></script>
+
+  <script type="module" src="{% static 'js/app.js' %}"></script>
+</body>
+
 </html>
