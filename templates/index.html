@@ -118,7 +118,7 @@
               <td class="py-4 px-2">
                 <!-- Toggle করার জন্য লিঙ্ক -->
                 <a href="{% url 'toggle_task' task.id %}"
-                  class="w-5 h-5 rounded-full border-2 flex items-center justify-center transition {% if task.is_completed %}border-teal-500 bg-teal-500{% else %}border-slate-600 hover:border-teal-400{% endif %}">
+                  class="task-toggle w-5 h-5 rounded-full border-2 flex items-center justify-center transition {% if task.is_completed %}border-teal-500 bg-teal-500{% else %}border-slate-600 hover:border-teal-400{% endif %}">
                   {% if task.is_completed %}
                   <i class="fa-solid fa-check text-[10px] text-slate-950"></i>
                   {% endif %}
