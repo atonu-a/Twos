@@ -129,12 +129,13 @@ CLOUDINARY_STORAGE = {
 
 MEDIA_URL = '/media/'
 
-# Unified File & Media Storage Settings (Django 4.2+)
+# WhiteNoise Configuration
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
