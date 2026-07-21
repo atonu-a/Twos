@@ -2,42 +2,92 @@
 
 {% block title %}Join Twos | Register{% endblock %}
 
+{% block header %}
+<!-- Cosmic Navbar -->
+<nav class="cosmic-panel border-b border-indigo-500/10 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
+        <!-- Logo -->
+        <div class="flex items-center gap-2.5">
+            <div
+                class="w-9 h-9 flex items-center justify-center text-indigo-400 bg-indigo-500/10 rounded-xl border border-indigo-500/20 shadow-inner shadow-indigo-500/10">
+                <i class="fa-solid fa-user-astronaut text-base"></i>
+            </div>
+            <a class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-200 via-indigo-300 to-purple-300 bg-clip-text text-transparent"
+                href="{% url 'index' %}">
+                Twos
+            </a>
+        </div>
+    </div>
+</nav>
+{% endblock header %}
+
 {% block content %}
-<div class="max-w-md mx-auto mt-10 px-4">
-    <div class="cosmic-panel rounded-3xl p-8 shadow-2xl border border-indigo-500/20 bg-slate-900/50 backdrop-blur-md">
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-300 to-purple-400 bg-clip-text text-transparent">
-                Start Your Mission</h2>
-            <p class="text-slate-400 mt-2 text-sm">Create an account to track your orbits</p>
+<div class="max-w-md mx-auto my-12 px-4">
+    <div
+        class="cosmic-panel rounded-3xl p-8 shadow-2xl border border-indigo-500/20 bg-slate-900/60 backdrop-blur-xl relative overflow-hidden">
+
+        <!-- Subtle Glow Effect in Background -->
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl pointer-events-none">
         </div>
 
-        <form method="POST" class="space-y-4">
+        <div class="text-center mb-8 relative z-10">
+            <h2
+                class="text-3xl font-extrabold bg-gradient-to-r from-indigo-200 via-indigo-300 to-purple-300 bg-clip-text text-transparent tracking-tight">
+                Start Your Mission
+            </h2>
+            <p class="text-slate-400 mt-2 text-sm font-medium">Create an account to track your orbits</p>
+        </div>
+
+        <form method="POST" class="space-y-5 relative z-10">
             {% csrf_token %}
 
-            <!-- গ্লোবাল এরর মেসেজ -->
+            <!-- Global Error Message -->
             {% if form.non_field_errors %}
-            <div class="bg-red-500/10 border border-red-500/50 text-red-400 text-xs p-3 rounded-xl">
-                {% for error in form.non_field_errors %} {{ error }} {% endfor %}
+            <div
+                class="bg-red-500/10 border border-red-500/30 text-red-400 text-xs p-3.5 rounded-2xl flex items-start gap-2.5">
+                <i class="fa-solid fa-triangle-exclamation text-sm mt-0.5 shrink-0"></i>
+                <div>
+                    {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
             </div>
             {% endif %}
 
-            <!-- ফর্ম ফিল্ড লুপ  -->
+            <!-- Form Field Loop -->
             {% for field in form %}
             <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">
+                <label class="block text-[11px] font-bold text-indigo-300/70 uppercase tracking-wider mb-2 ml-1">
                     {{ field.label }}
                 </label>
 
-                {{ field }} 
+                <!-- Check if field is password type to append Eye Icon -->
+                {% if field.field.widget.input_type == 'password' %}
+                <div class="relative group">
+                    {{ field }}
+                    <button type="button"
+                        class="toggle-password absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-300 transition-colors p-1"
+                        title="Toggle Password Visibility">
+                        <i class="fa-regular fa-eye text-sm"></i>
+                    </button>
+                </div>
+                {% else %}
+                {{ field }}
+                {% endif %}
 
+                <!-- Field Errors -->
                 {% if field.errors %}
-                <p class="text-red-400 text-[10px] mt-1 ml-1 uppercase font-bold tracking-tighter">
+                <p class="text-red-400 text-[11px] mt-1.5 ml-1 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-circle-exclamation text-[10px]"></i>
                     {{ field.errors.0 }}
                 </p>
                 {% endif %}
 
+                <!-- Help Text -->
                 {% if field.help_text %}
-                <p class="text-slate-600 text-[10px] mt-1 ml-1 italic leading-tight">
+                <p class="text-slate-400/80 text-[11px] mt-1.5 ml-1 leading-relaxed">
                     {{ field.help_text|safe }}
                 </p>
                 {% endif %}
@@ -45,18 +95,24 @@
             {% endfor %}
 
             <button type="submit"
-                class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.02] active:scale-95 text-white py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/25 mt-6 uppercase tracking-widest text-sm">
+                class="w-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 active:scale-[0.98] text-white py-3.5 rounded-xl font-bold transition-all duration-200 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/35 mt-6 uppercase tracking-wider text-xs btn-loading"
+                data-text="Initializing...">
                 Initialize Account
             </button>
         </form>
 
-        <p class="text-center text-slate-400 mt-8 text-xs">
-            Already in the orbit? <a href="{% url 'login' %}" class="text-indigo-400 hover:underline font-bold">Login
-                here</a>
+        <p class="text-center text-slate-400 mt-8 text-xs font-medium">
+            Already in orbit?
+            <a href="{% url 'login' %}"
+                class="text-indigo-300 hover:text-indigo-200 font-bold underline underline-offset-4 decoration-indigo-500/40 hover:decoration-indigo-400 transition-all">
+                Login here
+            </a>
         </p>
     </div>
 </div>
 
+<!-- Password Visibility Toggle Script -->
+<script>
 
-
+</script>
 {% endblock %}

@@ -35,7 +35,7 @@
       </div>
     </div>
   </div>
-
+{% block header %}
   <!-- Cosmic Navbar -->
   <nav class="cosmic-panel border-b sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
@@ -62,10 +62,11 @@
           <button title="Notifications" id="notification"
             class="notification text-slate-400 hover:text-indigo-400 relative">
             <i class="fa-solid fa-bell"></i>
-            {% comment %}
-            <span
-              class="absolute -top-2 -right-2 w-4 h-4 bg-red-500 text-[10px] rounded-full flex items-center justify-center text-white"></span>
-            {% endcomment %}
+
+            {% comment %} <span
+              class="absolute -top-2 -right-2 w-4 h-4 bg-red-500 text-[10px] rounded-full flex items-center justify-center text-white">!</span> {% endcomment %}
+
+            
           </button>
           <a title="History" href="{% url 'activities' %}" class="text-slate-400 hover:text-indigo-400">
             <i class="fa-solid fa-clock-rotate-left"></i>
@@ -174,7 +175,7 @@
       </a>
     </div>
   </div>
-
+{% endblock header %}
   <!-- Main Content -->
   <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6">
 

@@ -45,3 +45,24 @@ body,
 .animate-spin-slow {
   animation: spin 3s linear infinite;
 }
+
+
+/* Django form input styling */
+    .cosmic-panel input[type="text"],
+    .cosmic-panel input[type="email"],
+    .cosmic-panel input[type="password"] {
+        width: 100%;
+        background-color: rgba(2, 6, 23, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        color: #e2e8f0;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .cosmic-panel input:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 1px #6366f1;
+    }

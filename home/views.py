@@ -1,5 +1,5 @@
 # views.py - Django Views
-
+from django.views.decorators.cache import never_cache
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
@@ -119,6 +119,7 @@ def profile(request):
 
 
 # Login registration system
+@never_cache
 def login(request):
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
