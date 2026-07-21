@@ -31,6 +31,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     
+    # Third party apps
+    'tinymce',
+    
     # Your Apps
     'home',
 ]
@@ -110,11 +113,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / 'static',
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Cloudinary Media Storage Configuration
 CLOUDINARY_STORAGE = {
@@ -124,12 +128,13 @@ CLOUDINARY_STORAGE = {
 }
 
 MEDIA_URL = '/media/'
+
+# Unified File & Media Storage Settings (Django 4.2+)
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # CompressedManifestStaticFilesStorage এর জায়গায় এটি দাও
         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
