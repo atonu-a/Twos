@@ -124,12 +124,12 @@ CLOUDINARY_STORAGE = {
 }
 
 MEDIA_URL = '/media/'
-# Django 4.2+ / 5.0+ / 6.0 compatibility for Vercel
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # CompressedManifestStaticFilesStorage এর জায়গায় এটি দাও
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
