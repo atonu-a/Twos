@@ -9,13 +9,13 @@ if (menuBtn && mobileMenu) {
 }
 
 //Page loader
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
+// window.addEventListener("load", () => {
+//   const loader = document.getElementById("loader");
 
-  setTimeout(() => {
-    loader.classList.add("loader-hidden");
-  }, 300);
-});
+//   setTimeout(() => {
+//     loader.classList.add("loader-hidden");
+//   }, 300);
+// });
 
 document.addEventListener("DOMContentLoaded", function () {
   const loadingButtons = document.querySelectorAll(".btn-loading");
