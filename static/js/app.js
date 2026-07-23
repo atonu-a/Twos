@@ -83,19 +83,7 @@ document.addEventListener('click', function (e) {
     }
 });
 
-//calender toggle
-const calendarBtn = document.querySelectorAll(".calendar-btn");
-const crossBtn = document.getElementById("cross-btn");
-const calendarContainer = document.querySelector(".calendar-container");
 
-calendarBtn.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    calendarContainer.classList.toggle("hidden");
-  });
-});
-crossBtn.addEventListener("click", () => {
-  calendarContainer.classList.toggle("hidden");
-});
 
 
 // Notification toggle
@@ -170,3 +158,16 @@ if (profilePicInput && avatarPreview) {
 
 
 
+//calender toggle
+const calendarBtn = document.querySelectorAll(".calendar-btn");
+const crossBtn = document.getElementById("cross-btn");
+const calendarContainer = document.querySelector(".calendar-container");
+
+calendarBtn.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    calendarContainer.classList.toggle("hidden");
+  });
+});
+crossBtn.addEventListener("click", () => {
+  calendarContainer.classList.toggle("hidden");
+});

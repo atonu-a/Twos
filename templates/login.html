@@ -3,35 +3,42 @@
 {% block title %}Access Command | Login{% endblock %}
 
 {% block header %}
-  <!-- Cosmic Navbar -->
-  <nav class="cosmic-panel border-b border-indigo-500/10 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+<!-- Cosmic Navbar -->
+<nav class="cosmic-panel border-b border-indigo-500/10 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
-      <!-- Logo -->
-      <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 flex items-center justify-center text-indigo-400 bg-indigo-500/10 rounded-xl border border-indigo-500/20 shadow-inner shadow-indigo-500/10">
-          <i class="fa-solid fa-user-astronaut text-base"></i>
+        <!-- Logo -->
+        <div class="flex items-center gap-2.5">
+            <div
+                class="w-9 h-9 flex items-center justify-center text-indigo-400 bg-indigo-500/10 rounded-xl border border-indigo-500/20 shadow-inner shadow-indigo-500/10">
+                <i class="fa-solid fa-user-astronaut text-base"></i>
+            </div>
+            <a class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-200 via-indigo-300 to-purple-300 bg-clip-text text-transparent"
+                href="{% url 'index' %}">
+                Twos
+            </a>
         </div>
-        <a class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-200 via-indigo-300 to-purple-300 bg-clip-text text-transparent" href="{% url 'index' %}">
-          Twos
-        </a>
-      </div>
     </div>
-  </nav>
+</nav>
 {% endblock header %}
 
 {% block content %}
 <div class="max-w-md mx-auto my-12 px-4">
-    <div class="cosmic-panel rounded-3xl p-8 shadow-2xl border border-purple-500/20 bg-slate-900/60 backdrop-blur-xl relative overflow-hidden">
-        
+    <div
+        class="cosmic-panel rounded-3xl p-8 shadow-2xl border border-purple-500/20 bg-slate-900/60 backdrop-blur-xl relative overflow-hidden">
+
         <!-- Background Glow -->
-        <div class="absolute -top-20 -right-20 w-44 h-44 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-20 -left-20 w-44 h-44 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -top-20 -right-20 w-44 h-44 bg-purple-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div class="absolute -bottom-20 -left-20 w-44 h-44 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
 
         <div class="text-center mb-8 relative z-10">
-            <div class="w-16 h-16 bg-purple-500/10 text-purple-400 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-purple-500/20 shadow-inner shadow-purple-500/10">
+            <div
+                class="w-16 h-16 bg-purple-500/10 text-purple-400 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-purple-500/20 shadow-inner shadow-purple-500/10">
                 <i class="fa-solid fa-key text-2xl"></i>
             </div>
-            <h2 class="text-3xl font-extrabold bg-gradient-to-r from-slate-100 via-purple-100 to-purple-300 bg-clip-text text-transparent tracking-tight">
+            <h2
+                class="text-3xl font-extrabold bg-gradient-to-r from-slate-100 via-purple-100 to-purple-300 bg-clip-text text-transparent tracking-tight">
                 Welcome Back
             </h2>
             <p class="text-slate-400 mt-2 text-sm font-medium">Enter your credentials to board</p>
@@ -39,6 +46,21 @@
 
         <form method="POST" class="space-y-4 relative z-10">
             {% csrf_token %}
+
+
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+            <div role="alert" class="alert alert-error">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span><i class="fa-solid fa-face-frown"></i> Mission paused! <br>
+                    That username or password doesn't seem quite right. Give it another shot.</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+
 
             <!-- Username Field -->
             <div class="group">
@@ -59,9 +81,9 @@
                     <input type="password" name="password" required
                         class="w-full bg-slate-950/60 border border-purple-500/20 rounded-xl pl-4 pr-11 py-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200"
                         placeholder="••••••••">
-                    
+
                     <!-- Toggle Button for External JS -->
-                    <button type="button" 
+                    <button type="button"
                         class="toggle-password absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-purple-300 transition-colors p-1"
                         title="Toggle Password Visibility">
                         <i class="fa-regular fa-eye text-sm"></i>
@@ -70,15 +92,16 @@
             </div>
 
             <button type="submit"
-                class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-indigo-700 hover:from-purple-500 hover:to-indigo-600 active:scale-[0.98] text-white py-3.5 rounded-xl font-bold transition-all duration-200 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/35 mt-6 uppercase tracking-wider text-xs btn-loading" 
+                class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-indigo-700 hover:from-purple-500 hover:to-indigo-600 active:scale-[0.98] text-white py-3.5 rounded-xl font-bold transition-all duration-200 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/35 mt-6 uppercase tracking-wider text-xs btn-loading"
                 data-text="Launching...">
                 Launch Dashboard
             </button>
         </form>
 
         <p class="text-center text-slate-400 mt-8 text-xs font-medium border-t border-slate-800/80 pt-6">
-            New to the station? 
-            <a href="{% url 'register' %}" class="text-purple-300 hover:text-purple-200 font-bold underline underline-offset-4 decoration-purple-500/40 hover:decoration-purple-400 transition-all">
+            New to the station?
+            <a href="{% url 'register' %}"
+                class="text-purple-300 hover:text-purple-200 font-bold underline underline-offset-4 decoration-purple-500/40 hover:decoration-purple-400 transition-all">
                 Join the Fleet
             </a>
         </p>
